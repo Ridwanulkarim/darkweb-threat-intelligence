@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -13,6 +7,279 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Admin {
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  password  String
+  status    Status     @default(ACTIVE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  auditLogs AuditLog[]
+}
+
+model Analyst {
+  id             String             @id @default(uuid())
+  name           String
+  email          String             @unique
+  role           Role               @default(ANALYST)
+  status         Status             @default(ACTIVE)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  responses      IncidentResponse[]
+  investigations Investigation[]
+  reports        ThreatReport[]
+}
+
+model Organization {
+  id        String        @id @default(uuid())
+  name      String        @unique
+  country   String
+  isDeleted Boolean       @default(false)
+  deletedAt DateTime?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  incidents Incident[]
+  users     UserAccount[]
+}
+
+model UserAccount {
+  id           String       @id @default(uuid())
+  orgId        String
+  email        String       @unique
+  password     String
+  status       Status       @default(ACTIVE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  accessLogs   AccessLog[]
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+}
+
+model AccessLog {
+  id        String      @id @default(uuid())
+  userId    String
+  loginTime DateTime    @default(now())
+  status    Status
+  createdAt DateTime    @default(now())
+  user      UserAccount @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  adminId   String
+  action    String
+  createdAt DateTime @default(now())
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+}
+
+model ThreatSource {
+  id        String         @id @default(uuid())
+  name      String
+  type      String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  reports   ThreatReport[]
+}
+
+model ThreatCategory {
+  id        String         @id @default(uuid())
+  name      String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  reports   ThreatReport[]
+}
+
+model ThreatReport {
+  id                      String                   @id @default(uuid())
+  sourceId                String
+  categoryId              String
+  analystId               String
+  title                   String
+  status                  ThreatStatus             @default(NEW)
+  isDeleted               Boolean                  @default(false)
+  deletedAt               DateTime?
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  dataLeaks               DataLeak[]
+  hackerGroupActivities   HackerGroupActivity[]
+  incidents               Incident[]
+  investigations          Investigation[]
+  malware                 Malware[]
+  phishingAttacks         PhishingAttack[]
+  securityRecommendations SecurityRecommendation[]
+  alerts                  ThreatAlert[]
+  indicators              ThreatIndicator[]
+  analyst                 Analyst                  @relation(fields: [analystId], references: [id], onDelete: Cascade)
+  category                ThreatCategory           @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  source                  ThreatSource             @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@index([sourceId])
+  @@index([categoryId])
+  @@index([analystId])
+  @@index([status])
+}
+
+model ThreatIndicator {
+  id        String        @id @default(uuid())
+  reportId  String
+  type      IndicatorType
+  value     String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  report    ThreatReport  @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@unique([reportId, type, value])
+}
+
+model Malware {
+  id                String             @id @default(uuid())
+  reportId          String
+  name              String
+  type              String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  report            ThreatReport       @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  malwareFamilyMaps MalwareFamilyMap[]
+
+  @@unique([reportId, name, type])
+}
+
+model MalwareFamily {
+  id        String             @id @default(uuid())
+  name      String
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  maps      MalwareFamilyMap[]
+}
+
+model MalwareFamilyMap {
+  id        String        @id @default(uuid())
+  malwareId String
+  familyId  String
+  createdAt DateTime      @default(now())
+  family    MalwareFamily @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  malware   Malware       @relation(fields: [malwareId], references: [id], onDelete: Cascade)
+}
+
+model PhishingAttack {
+  id        String       @id @default(uuid())
+  reportId  String
+  url       String
+  createdAt DateTime     @default(now())
+  report    ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model DataLeak {
+  id          String             @id @default(uuid())
+  reportId    String
+  title       String
+  createdAt   DateTime           @default(now())
+  report      ThreatReport       @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  credentials LeakedCredential[]
+}
+
+model LeakedCredential {
+  id        String   @id @default(uuid())
+  leakId    String
+  email     String
+  createdAt DateTime @default(now())
+  leak      DataLeak @relation(fields: [leakId], references: [id], onDelete: Cascade)
+}
+
+model HackerGroup {
+  id         String                @id @default(uuid())
+  name       String
+  createdAt  DateTime              @default(now())
+  activities HackerGroupActivity[]
+}
+
+model HackerGroupActivity {
+  id        String       @id @default(uuid())
+  groupId   String
+  reportId  String
+  type      ActivityType
+  createdAt DateTime     @default(now())
+  group     HackerGroup  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  report    ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model Incident {
+  id           String             @id @default(uuid())
+  orgId        String
+  reportId     String
+  status       ResponseStatus
+  createdAt    DateTime           @default(now())
+  organization Organization       @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  report       ThreatReport       @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  alerts       IncidentAlert[]
+  responses    IncidentResponse[]
+
+  @@index([orgId])
+  @@index([reportId])
+  @@index([status])
+}
+
+model IncidentResponse {
+  id         String   @id @default(uuid())
+  incidentId String
+  analystId  String
+  createdAt  DateTime @default(now())
+  analyst    Analyst  @relation(fields: [analystId], references: [id], onDelete: Cascade)
+  incident   Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+}
+
+model IncidentAlert {
+  id         String     @id @default(uuid())
+  incidentId String
+  message    String
+  level      AlertLevel
+  createdAt  DateTime   @default(now())
+  incident   Incident   @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+}
+
+model ThreatAlert {
+  id        String       @id @default(uuid())
+  reportId  String
+  message   String
+  level     AlertLevel
+  createdAt DateTime     @default(now())
+  report    ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model SecurityRecommendation {
+  id        String       @id @default(uuid())
+  reportId  String
+  text      String
+  createdAt DateTime     @default(now())
+  report    ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model Investigation {
+  id        String              @id @default(uuid())
+  reportId  String
+  analystId String
+  status    InvestigationStatus
+  createdAt DateTime            @default(now())
+  evidences Evidence[]
+  analyst   Analyst             @relation(fields: [analystId], references: [id], onDelete: Cascade)
+  report    ThreatReport        @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model Evidence {
+  id              String        @id @default(uuid())
+  investigationId String
+  fileName        String
+  createdAt       DateTime      @default(now())
+  investigation   Investigation @relation(fields: [investigationId], references: [id], onDelete: Cascade)
+}
+
 enum Role {
   ADMIN
   ANALYST
@@ -71,332 +338,4 @@ enum IndicatorType {
   URL
   EMAIL
   HASH
-}
-
-model Admin {
-  id String @id @default(uuid())
-  name String
-  email String @unique
-  password String
-  status Status @default(ACTIVE)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  auditLogs AuditLog[]
-}
-
-model Analyst {
-  id String @id @default(uuid())
-  name String
-  email String @unique
-  role Role @default(ANALYST)
-  status Status @default(ACTIVE)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  reports ThreatReport[]
-  responses IncidentResponse[]
-  investigations Investigation[]
-}
-
-model Organization {
-  id String @id @default(uuid())
-  name String @unique
-  country String
-  isDeleted Boolean @default(false)
-  deletedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  users UserAccount[]
-  incidents Incident[]
-}
-
-model UserAccount {
-  id String @id @default(uuid())
-  orgId String
-  email String @unique
-  password String
-  status Status @default(ACTIVE)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  accessLogs AccessLog[]
-
-  @@index([orgId])
-}
-
-model AccessLog {
-  id String @id @default(uuid())
-  userId String
-  loginTime DateTime @default(now())
-  status Status
-
-  createdAt DateTime @default(now())
-
-  user UserAccount @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
-
-model AuditLog {
-  id String @id @default(uuid())
-  adminId String
-  action String
-
-  createdAt DateTime @default(now())
-
-  admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
-
-  @@index([adminId])
-}
-
-model ThreatSource {
-  id String @id @default(uuid())
-  name String
-  type String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  reports ThreatReport[]
-}
-
-model ThreatCategory {
-  id String @id @default(uuid())
-  name String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  reports ThreatReport[]
-}
-
-model ThreatReport {
-  id String @id @default(uuid())
-  sourceId String
-  categoryId String
-  analystId String
-  title String
-  status ThreatStatus @default(NEW)
-
-  isDeleted Boolean @default(false)
-  deletedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  source ThreatSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
-  category ThreatCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  analyst Analyst @relation(fields: [analystId], references: [id], onDelete: Cascade)
-
-  indicators ThreatIndicator[]
-  malware Malware[]
-  incidents Incident[]
-  alerts ThreatAlert[]
-
-  phishingAttacks PhishingAttack[]
-  dataLeaks DataLeak[]
-  hackerGroupActivities HackerGroupActivity[]
-  securityRecommendations SecurityRecommendation[]
-  investigations Investigation[]
-
-  @@index([sourceId])
-  @@index([categoryId])
-  @@index([analystId])
-  @@index([status])
-}
-
-model ThreatIndicator {
-  id String @id @default(uuid())
-  reportId String
-  type IndicatorType
-  value String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-
-  @@unique([reportId, type, value])
-}
-
-model Malware {
-  id String @id @default(uuid())
-  reportId String
-  name String
-  type String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-
-  malwareFamilyMaps MalwareFamilyMap[]
-
-  @@unique([reportId, name, type])
-}
-
-model MalwareFamily {
-  id String @id @default(uuid())
-  name String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  maps MalwareFamilyMap[]
-}
-
-model MalwareFamilyMap {
-  id String @id @default(uuid())
-  malwareId String
-  familyId String
-
-  createdAt DateTime @default(now())
-
-  malware Malware @relation(fields: [malwareId], references: [id], onDelete: Cascade)
-  family MalwareFamily @relation(fields: [familyId], references: [id], onDelete: Cascade)
-}
-
-model PhishingAttack {
-  id String @id @default(uuid())
-  reportId String
-  url String
-
-  createdAt DateTime @default(now())
-
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-}
-
-model DataLeak {
-  id String @id @default(uuid())
-  reportId String
-  title String
-
-  createdAt DateTime @default(now())
-
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-  credentials LeakedCredential[]
-}
-
-model LeakedCredential {
-  id String @id @default(uuid())
-  leakId String
-  email String
-
-  createdAt DateTime @default(now())
-
-  leak DataLeak @relation(fields: [leakId], references: [id], onDelete: Cascade)
-}
-
-model HackerGroup {
-  id String @id @default(uuid())
-  name String
-
-  createdAt DateTime @default(now())
-
-  activities HackerGroupActivity[]
-}
-
-model HackerGroupActivity {
-  id String @id @default(uuid())
-  groupId String
-  reportId String
-  type ActivityType
-
-  createdAt DateTime @default(now())
-
-  group HackerGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-}
-
-model Incident {
-  id String @id @default(uuid())
-  orgId String
-  reportId String
-  status ResponseStatus
-
-  createdAt DateTime @default(now())
-
-  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-
-  responses IncidentResponse[]
-  alerts IncidentAlert[]
-
-  @@index([orgId])
-  @@index([reportId])
-  @@index([status])
-}
-
-model IncidentResponse {
-  id String @id @default(uuid())
-  incidentId String
-  analystId String
-
-  createdAt DateTime @default(now())
-
-  incident Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
-  analyst Analyst @relation(fields: [analystId], references: [id], onDelete: Cascade)
-}
-
-model IncidentAlert {
-  id String @id @default(uuid())
-  incidentId String
-  message String
-  level AlertLevel
-
-  createdAt DateTime @default(now())
-
-  incident Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
-}
-
-model ThreatAlert {
-  id String @id @default(uuid())
-  reportId String
-  message String
-  level AlertLevel
-
-  createdAt DateTime @default(now())
-
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-}
-
-model SecurityRecommendation {
-  id String @id @default(uuid())
-  reportId String
-  text String
-
-  createdAt DateTime @default(now())
-
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-}
-
-model Investigation {
-  id String @id @default(uuid())
-  reportId String
-  analystId String
-  status InvestigationStatus
-
-  createdAt DateTime @default(now())
-
-  report ThreatReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-  analyst Analyst @relation(fields: [analystId], references: [id], onDelete: Cascade)
-
-  evidences Evidence[]
-}
-
-model Evidence {
-  id String @id @default(uuid())
-  investigationId String
-  fileName String
-
-  createdAt DateTime @default(now())
-
-  investigation Investigation @relation(fields: [investigationId], references: [id], onDelete: Cascade)
 }
