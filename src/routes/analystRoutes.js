@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const analystController = require('../controllers/analystController');
+const authMiddleware = require('../middleware/authMiddleware');
 const analystMiddleware = require('../middleware/analystMiddleware');
 
+router.use(authMiddleware);
 router.use(analystMiddleware);
 
 router.post('/', analystController.createAnalyst);

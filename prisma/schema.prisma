@@ -82,6 +82,7 @@ model Analyst {
   id             String             @id @default(uuid())
   name           String
   email          String             @unique
+  password       String
   role           Role               @default(ANALYST)
   status         Status             @default(ACTIVE)
   createdAt      DateTime           @default(now())
