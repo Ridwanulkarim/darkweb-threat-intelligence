@@ -7,6 +7,168 @@
   },
   "item": [
     {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Admin Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"securePassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/admin/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "admin",
+                "register"
+              ]
+            }
+          },
+          "auth": {
+            "type": "noauth"
+          }
+        },
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"securePassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/admin/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "admin",
+                "login"
+              ]
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "const jsonData = pm.response.json();",
+                    "if (jsonData?.data?.token) {",
+                    "    pm.environment.set(\"token\", jsonData.data.token);",
+                    "    console.log(\"Saved token to environment variable: token\");",
+                    "} else {",
+                    "    console.log(\"Login response did not contain token.\");",
+                    "}"
+                  ]
+                }
+              }
+            ]
+          },
+          "auth": {
+            "type": "noauth"
+          }
+        },
+        {
+          "name": "Analyst Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Security Analyst\",\n  \"email\": \"analyst@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"ANALYST\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/analyst/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "analyst",
+                "register"
+              ]
+            }
+          },
+          "auth": {
+            "type": "noauth"
+          }
+        },
+        {
+          "name": "Analyst Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"analyst@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/analyst/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "analyst",
+                "login"
+              ]
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "const jsonData = pm.response.json();",
+                    "if (jsonData?.data?.token) {",
+                    "    pm.environment.set(\"token\", jsonData.data.token);",
+                    "    console.log(\"Saved token to environment variable: token\");",
+                    "} else {",
+                    "    console.log(\"Login response did not contain token.\");",
+                    "}"
+                  ]
+                }
+              }
+            ]
+          },
+          "auth": {
+            "type": "noauth"
+          }
+        }
+      ],
+      "auth": {
+        "type": "noauth"
+      }
+    },
+    {
       "name": "Admin",
       "item": [
         {
@@ -29,8 +191,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/admin",
-              "host": ["{{baseUrl}}"],
-              "path": ["admin"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin"
+              ]
             }
           }
         },
@@ -46,8 +212,12 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/admin?page=1&limit=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["admin"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -73,8 +243,13 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/admin/{{adminId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["admin", "{{adminId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "{{adminId}}"
+              ]
             }
           }
         },
@@ -98,8 +273,13 @@
             },
             "url": {
               "raw": "{{baseUrl}}/admin/{{adminId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["admin", "{{adminId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "{{adminId}}"
+              ]
             }
           }
         },
@@ -115,8 +295,13 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/admin/{{adminId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["admin", "{{adminId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "{{adminId}}"
+              ]
             }
           }
         }
@@ -145,8 +330,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/analyst",
-              "host": ["{{baseUrl}}"],
-              "path": ["analyst"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analyst"
+              ]
             }
           }
         },
@@ -162,8 +351,12 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/analyst?page=1&limit=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["analyst"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analyst"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -189,8 +382,13 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/analyst/{{analystId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["analyst", "{{analystId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analyst",
+                "{{analystId}}"
+              ]
             }
           }
         }
@@ -215,8 +413,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/organizations",
-              "host": ["{{baseUrl}}"],
-              "path": ["organizations"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations"
+              ]
             }
           }
         },
@@ -226,8 +428,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/organizations?page=1&limit=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["organizations"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -247,8 +453,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/organizations/{{orgId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["organizations", "{{orgId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{{orgId}}"
+              ]
             }
           }
         },
@@ -268,8 +479,13 @@
             },
             "url": {
               "raw": "{{baseUrl}}/organizations/{{orgId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["organizations", "{{orgId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{{orgId}}"
+              ]
             }
           }
         },
@@ -279,8 +495,13 @@
             "method": "DELETE",
             "url": {
               "raw": "{{baseUrl}}/organizations/{{orgId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["organizations", "{{orgId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations",
+                "{{orgId}}"
+              ]
             }
           }
         }
@@ -305,8 +526,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/threat-reports",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-reports"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-reports"
+              ]
             }
           }
         },
@@ -316,8 +541,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/threat-reports?page=1&limit=10&status=NEW",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-reports"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-reports"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -341,8 +570,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/threat-reports/{{reportId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-reports", "{{reportId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-reports",
+                "{{reportId}}"
+              ]
             }
           }
         },
@@ -362,8 +596,13 @@
             },
             "url": {
               "raw": "{{baseUrl}}/threat-reports/{{reportId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-reports", "{{reportId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-reports",
+                "{{reportId}}"
+              ]
             }
           }
         },
@@ -373,8 +612,13 @@
             "method": "DELETE",
             "url": {
               "raw": "{{baseUrl}}/threat-reports/{{reportId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-reports", "{{reportId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-reports",
+                "{{reportId}}"
+              ]
             }
           }
         }
@@ -399,8 +643,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/threat-indicators",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-indicators"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-indicators"
+              ]
             }
           }
         },
@@ -410,8 +658,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/threat-indicators?page=1&limit=10&type=IP",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-indicators"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-indicators"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -435,8 +687,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/threat-indicators/{{indicatorId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-indicators", "{{indicatorId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-indicators",
+                "{{indicatorId}}"
+              ]
             }
           }
         }
@@ -461,8 +718,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/malware",
-              "host": ["{{baseUrl}}"],
-              "path": ["malware"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "malware"
+              ]
             }
           }
         },
@@ -472,8 +733,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/malware?page=1&limit=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["malware"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "malware"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -493,8 +758,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/malware/{{malwareId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["malware", "{{malwareId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "malware",
+                "{{malwareId}}"
+              ]
             }
           }
         }
@@ -519,8 +789,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/incidents",
-              "host": ["{{baseUrl}}"],
-              "path": ["incidents"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "incidents"
+              ]
             }
           }
         },
@@ -530,8 +804,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/incidents?page=1&limit=10&status=IN_PROGRESS",
-              "host": ["{{baseUrl}}"],
-              "path": ["incidents"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "incidents"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -555,8 +833,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/incidents/{{incidentId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["incidents", "{{incidentId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "incidents",
+                "{{incidentId}}"
+              ]
             }
           }
         },
@@ -576,8 +859,13 @@
             },
             "url": {
               "raw": "{{baseUrl}}/incidents/{{incidentId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["incidents", "{{incidentId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "incidents",
+                "{{incidentId}}"
+              ]
             }
           }
         }
@@ -602,8 +890,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/investigations",
-              "host": ["{{baseUrl}}"],
-              "path": ["investigations"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "investigations"
+              ]
             }
           }
         },
@@ -613,8 +905,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/investigations?page=1&limit=10&status=IN_PROGRESS",
-              "host": ["{{baseUrl}}"],
-              "path": ["investigations"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "investigations"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -638,8 +934,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/investigations/{{investigationId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["investigations", "{{investigationId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "investigations",
+                "{{investigationId}}"
+              ]
             }
           }
         },
@@ -659,8 +960,13 @@
             },
             "url": {
               "raw": "{{baseUrl}}/investigations/{{investigationId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["investigations", "{{investigationId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "investigations",
+                "{{investigationId}}"
+              ]
             }
           }
         }
@@ -685,8 +991,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/data-leaks",
-              "host": ["{{baseUrl}}"],
-              "path": ["data-leaks"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data-leaks"
+              ]
             }
           }
         },
@@ -696,8 +1006,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/data-leaks?page=1&limit=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["data-leaks"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data-leaks"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -717,8 +1031,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/data-leaks/{{leakId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["data-leaks", "{{leakId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data-leaks",
+                "{{leakId}}"
+              ]
             }
           }
         }
@@ -743,8 +1062,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/hacker-groups",
-              "host": ["{{baseUrl}}"],
-              "path": ["hacker-groups"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hacker-groups"
+              ]
             }
           }
         },
@@ -754,8 +1077,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/hacker-groups?page=1&limit=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["hacker-groups"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hacker-groups"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -775,8 +1102,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/hacker-groups/{{groupId}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["hacker-groups", "{{groupId}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hacker-groups",
+                "{{groupId}}"
+              ]
             }
           }
         }
@@ -801,8 +1133,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/threat-sources",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-sources"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-sources"
+              ]
             }
           }
         },
@@ -812,8 +1148,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/threat-sources?page=1&limit=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-sources"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-sources"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -848,8 +1188,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/threat-categories",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-categories"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-categories"
+              ]
             }
           }
         },
@@ -859,8 +1203,12 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/threat-categories?page=1&limit=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["threat-categories"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "threat-categories"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -882,8 +1230,12 @@
         "method": "GET",
         "url": {
           "raw": "{{baseUrl}}/health",
-          "host": ["{{baseUrl}}"],
-          "path": ["health"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
         }
       }
     }
@@ -959,5 +1311,15 @@
       "value": "",
       "type": "string"
     }
-  ]
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  }
 }
