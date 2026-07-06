@@ -84,7 +84,24 @@
           },
           "auth": {
             "type": "noauth"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.data && jsonData.data.token) {",
+                  "    pm.environment.set(\"token\", jsonData.data.token);",
+                  "    console.log(\"Saved token to environment variable: token\");",
+                  "} else {",
+                  "    console.log(\"Login response did not contain token.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Analyst Register",
@@ -161,7 +178,24 @@
           },
           "auth": {
             "type": "noauth"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.data && jsonData.data.token) {",
+                  "    pm.environment.set(\"token\", jsonData.data.token);",
+                  "    console.log(\"Saved token to environment variable: token\");",
+                  "} else {",
+                  "    console.log(\"Login response did not contain token.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         }
       ],
       "auth": {
@@ -305,7 +339,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Analyst",
@@ -392,7 +436,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Organizations",
@@ -505,7 +559,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Threat Reports",
@@ -622,7 +686,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Threat Indicators",
@@ -697,7 +771,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Malware",
@@ -768,7 +852,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Incidents",
@@ -869,7 +963,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Investigations",
@@ -970,7 +1074,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Data Leaks",
@@ -1041,7 +1155,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Hacker Groups",
@@ -1112,7 +1236,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Threat Sources",
@@ -1167,7 +1301,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Threat Categories",
@@ -1222,7 +1366,17 @@
             }
           }
         }
-      ]
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
     },
     {
       "name": "Health Check",
@@ -1237,6 +1391,16 @@
             "health"
           ]
         }
+      },
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
       }
     }
   ],
