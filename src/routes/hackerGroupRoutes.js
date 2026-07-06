@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const hackerGroupController = require('../controllers/hackerGroupController');
+const authMiddleware = require('../middleware/authMiddleware');
 
+router.use(authMiddleware);
 router.post('/', hackerGroupController.createGroup);
 router.get('/', hackerGroupController.getAllGroups);
 router.get('/:id', hackerGroupController.getGroupById);

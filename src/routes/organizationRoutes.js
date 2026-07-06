@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const organizationController = require('../controllers/organizationController');
+const authMiddleware = require('../middleware/authMiddleware');
 
+router.use(authMiddleware);
 router.post('/', organizationController.createOrganization);
 router.get('/', organizationController.getAllOrganizations);
 router.get('/:id', organizationController.getOrganizationById);
