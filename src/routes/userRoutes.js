@@ -3,8 +3,10 @@ const router = express.Router();
 
 const userController = require('../controllers/userController');
 const authMiddleware = require('../middleware/authMiddleware');
+const analystMiddleware = require('../middleware/analystMiddleware');
 
 router.use(authMiddleware);
+router.use(analystMiddleware);
 router.post('/', userController.createUser);
 router.get('/', userController.getAllUsers);
 router.get('/:id', userController.getUserById);

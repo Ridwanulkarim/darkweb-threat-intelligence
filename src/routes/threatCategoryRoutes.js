@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
+const analystMiddleware = require('../middleware/analystMiddleware');
 router.use(authMiddleware);
+router.use(analystMiddleware);
 const prisma = require('../database/prisma');
 const { formatResponse, getPaginationParams } = require('../utils/helpers');
 
