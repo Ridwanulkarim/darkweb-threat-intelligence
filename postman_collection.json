@@ -93,8 +93,8 @@
                 "exec": [
                   "const jsonData = pm.response.json();",
                   "if (jsonData && jsonData.data && jsonData.data.token) {",
-                  "    pm.environment.set(\"token\", jsonData.data.token);",
-                  "    console.log(\"Saved token to environment variable: token\");",
+                  "    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+                  "    console.log(\"Saved token to collection variable: token\");",
                   "} else {",
                   "    console.log(\"Login response did not contain token.\");",
                   "}"
@@ -187,8 +187,8 @@
                 "exec": [
                   "const jsonData = pm.response.json();",
                   "if (jsonData && jsonData.data && jsonData.data.token) {",
-                  "    pm.environment.set(\"token\", jsonData.data.token);",
-                  "    console.log(\"Saved token to environment variable: token\");",
+                  "    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+                  "    console.log(\"Saved token to collection variable: token\");",
                   "} else {",
                   "    console.log(\"Login response did not contain token.\");",
                   "}"
