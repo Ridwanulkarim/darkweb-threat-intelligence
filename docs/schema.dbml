@@ -1,0 +1,290 @@
+Enum Role {
+	ADMIN
+	ANALYST
+	MANAGER
+}
+
+Enum Status {
+	ACTIVE
+	INACTIVE
+	SUSPENDED
+	BANNED
+}
+
+Enum ThreatStatus {
+	NEW
+	INVESTIGATING
+	CONFIRMED
+	FALSE_POSITIVE
+	MITIGATED
+	CLOSED
+}
+
+Enum AlertLevel {
+	INFO
+	WARNING
+	ERROR
+	CRITICAL
+}
+
+Enum ResponseStatus {
+	NOT_STARTED
+	IN_PROGRESS
+	CONTAINED
+	ERADICATED
+	RECOVERED
+	CLOSED
+}
+
+Enum InvestigationStatus {
+	OPEN
+	IN_PROGRESS
+	COMPLETED
+	CLOSED
+}
+
+Enum ActivityType {
+	RECONNAISSANCE
+	PHISHING
+	MALWARE_DEPLOYMENT
+	DATA_THEFT
+}
+
+Enum IndicatorType {
+	IP
+	DOMAIN
+	URL
+	EMAIL
+	HASH
+}
+
+Table Admin {
+	id String [pk]
+	name String
+	email String [unique]
+	password String
+	status Status
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table Analyst {
+	id String [pk]
+	name String
+	email String [unique]
+	role Role
+	status Status
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table Organization {
+	id String [pk]
+	name String [unique]
+	country String
+	isDeleted Boolean
+	deletedAt DateTime
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table UserAccount {
+	id String [pk]
+	orgId String
+	email String [unique]
+	password String
+	status Status
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table AccessLog {
+	id String [pk]
+	userId String
+	loginTime DateTime
+	status Status
+	createdAt DateTime
+}
+
+Table AuditLog {
+	id String [pk]
+	adminId String
+	action String
+	createdAt DateTime
+}
+
+Table ThreatSource {
+	id String [pk]
+	name String
+	type String
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table ThreatCategory {
+	id String [pk]
+	name String
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table ThreatReport {
+	id String [pk]
+	sourceId String
+	categoryId String
+	analystId String
+	title String
+	status ThreatStatus
+	isDeleted Boolean
+	deletedAt DateTime
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table ThreatIndicator {
+	id String [pk]
+	reportId String
+	type IndicatorType
+	value String
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table Malware {
+	id String [pk]
+	reportId String
+	name String
+	type String
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table MalwareFamily {
+	id String [pk]
+	name String
+	createdAt DateTime
+	updatedAt DateTime
+}
+
+Table MalwareFamilyMap {
+	id String [pk]
+	malwareId String
+	familyId String
+	createdAt DateTime
+}
+
+Table PhishingAttack {
+	id String [pk]
+	reportId String
+	url String
+	createdAt DateTime
+}
+
+Table DataLeak {
+	id String [pk]
+	reportId String
+	title String
+	createdAt DateTime
+}
+
+Table LeakedCredential {
+	id String [pk]
+	leakId String
+	email String
+	createdAt DateTime
+}
+
+Table HackerGroup {
+	id String [pk]
+	name String
+	createdAt DateTime
+}
+
+Table HackerGroupActivity {
+	id String [pk]
+	groupId String
+	reportId String
+	type ActivityType
+	createdAt DateTime
+}
+
+Table Incident {
+	id String [pk]
+	orgId String
+	reportId String
+	status ResponseStatus
+	createdAt DateTime
+}
+
+Table IncidentResponse {
+	id String [pk]
+	incidentId String
+	analystId String
+	createdAt DateTime
+}
+
+Table IncidentAlert {
+	id String [pk]
+	incidentId String
+	message String
+	level AlertLevel
+	createdAt DateTime
+}
+
+Table ThreatAlert {
+	id String [pk]
+	reportId String
+	message String
+	level AlertLevel
+	createdAt DateTime
+}
+
+Table SecurityRecommendation {
+	id String [pk]
+	reportId String
+	text String
+	createdAt DateTime
+}
+
+Table Investigation {
+	id String [pk]
+	reportId String
+	analystId String
+	status InvestigationStatus
+	createdAt DateTime
+}
+
+Table Evidence {
+	id String [pk]
+	investigationId String
+	fileName String
+	createdAt DateTime
+}
+
+// Foreign key references
+Ref: UserAccount.orgId > Organization.id
+Ref: AccessLog.userId > UserAccount.id
+Ref: AuditLog.adminId > Admin.id
+Ref: ThreatReport.sourceId > ThreatSource.id
+Ref: ThreatReport.categoryId > ThreatCategory.id
+Ref: ThreatReport.analystId > Analyst.id
+Ref: ThreatIndicator.reportId > ThreatReport.id
+Ref: Malware.reportId > ThreatReport.id
+Ref: MalwareFamilyMap.malwareId > Malware.id
+Ref: MalwareFamilyMap.familyId > MalwareFamily.id
+Ref: PhishingAttack.reportId > ThreatReport.id
+Ref: DataLeak.reportId > ThreatReport.id
+Ref: LeakedCredential.leakId > DataLeak.id
+Ref: HackerGroupActivity.groupId > HackerGroup.id
+Ref: HackerGroupActivity.reportId > ThreatReport.id
+Ref: Incident.orgId > Organization.id
+Ref: Incident.reportId > ThreatReport.id
+Ref: IncidentResponse.incidentId > Incident.id
+Ref: IncidentResponse.analystId > Analyst.id
+Ref: IncidentAlert.incidentId > Incident.id
+Ref: ThreatAlert.reportId > ThreatReport.id
+Ref: SecurityRecommendation.reportId > ThreatReport.id
+Ref: Investigation.reportId > ThreatReport.id
+Ref: Investigation.analystId > Analyst.id
+Ref: Evidence.investigationId > Investigation.id
+

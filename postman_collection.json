@@ -1,0 +1,963 @@
+{
+  "info": {
+    "_postman_id": "dark-web-threat-intel-api",
+    "name": "Dark Web Threat Intelligence API",
+    "description": "Comprehensive API for threat intelligence management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Create Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"securePassword123\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin"]
+            }
+          }
+        },
+        {
+          "name": "Get All Admins",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Admin by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/{{adminId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "{{adminId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Admin",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/{{adminId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "{{adminId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Admin",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/{{adminId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "{{adminId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analyst",
+      "item": [
+        {
+          "name": "Create Analyst",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Security Analyst\",\n  \"email\": \"analyst@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"ANALYST\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/analyst",
+              "host": ["{{baseUrl}}"],
+              "path": ["analyst"]
+            }
+          }
+        },
+        {
+          "name": "Get All Analysts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analyst?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["analyst"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Analyst by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analyst/{{analystId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["analyst", "{{analystId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Organizations",
+      "item": [
+        {
+          "name": "Create Organization",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"ACME Corporation\",\n  \"country\": \"United States\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/organizations",
+              "host": ["{{baseUrl}}"],
+              "path": ["organizations"]
+            }
+          }
+        },
+        {
+          "name": "Get All Organizations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/organizations?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["organizations"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Organization by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{{orgId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["organizations", "{{orgId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Organization",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"ACME Corp Updated\",\n  \"country\": \"Canada\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{{orgId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["organizations", "{{orgId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Organization",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/organizations/{{orgId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["organizations", "{{orgId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Threat Reports",
+      "item": [
+        {
+          "name": "Create Threat Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceId\": \"{{sourceId}}\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"analystId\": \"{{analystId}}\",\n  \"title\": \"Critical Malware Detection\",\n  \"status\": \"NEW\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/threat-reports",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-reports"]
+            }
+          }
+        },
+        {
+          "name": "Get All Threat Reports",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/threat-reports?page=1&limit=10&status=NEW",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-reports"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "NEW"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Report by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/threat-reports/{{reportId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-reports", "{{reportId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Report Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"INVESTIGATING\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/threat-reports/{{reportId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-reports", "{{reportId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Report",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/threat-reports/{{reportId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-reports", "{{reportId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Threat Indicators",
+      "item": [
+        {
+          "name": "Create Indicator",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reportId\": \"{{reportId}}\",\n  \"type\": \"IP\",\n  \"value\": \"192.168.1.1\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/threat-indicators",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-indicators"]
+            }
+          }
+        },
+        {
+          "name": "Get All Indicators",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/threat-indicators?page=1&limit=10&type=IP",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-indicators"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "type",
+                  "value": "IP"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Indicator by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/threat-indicators/{{indicatorId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-indicators", "{{indicatorId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Malware",
+      "item": [
+        {
+          "name": "Create Malware",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reportId\": \"{{reportId}}\",\n  \"name\": \"Trojan.Generic\",\n  \"type\": \"Trojan\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/malware",
+              "host": ["{{baseUrl}}"],
+              "path": ["malware"]
+            }
+          }
+        },
+        {
+          "name": "Get All Malware",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/malware?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["malware"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Malware by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/malware/{{malwareId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["malware", "{{malwareId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Incidents",
+      "item": [
+        {
+          "name": "Create Incident",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orgId\": \"{{orgId}}\",\n  \"reportId\": \"{{reportId}}\",\n  \"status\": \"NOT_STARTED\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/incidents",
+              "host": ["{{baseUrl}}"],
+              "path": ["incidents"]
+            }
+          }
+        },
+        {
+          "name": "Get All Incidents",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/incidents?page=1&limit=10&status=IN_PROGRESS",
+              "host": ["{{baseUrl}}"],
+              "path": ["incidents"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "IN_PROGRESS"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Incident by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/incidents/{{incidentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["incidents", "{{incidentId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Incident Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"CONTAINED\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/incidents/{{incidentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["incidents", "{{incidentId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Investigations",
+      "item": [
+        {
+          "name": "Create Investigation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reportId\": \"{{reportId}}\",\n  \"analystId\": \"{{analystId}}\",\n  \"status\": \"OPEN\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/investigations",
+              "host": ["{{baseUrl}}"],
+              "path": ["investigations"]
+            }
+          }
+        },
+        {
+          "name": "Get All Investigations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/investigations?page=1&limit=10&status=IN_PROGRESS",
+              "host": ["{{baseUrl}}"],
+              "path": ["investigations"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "IN_PROGRESS"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Investigation by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/investigations/{{investigationId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["investigations", "{{investigationId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Investigation Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"COMPLETED\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/investigations/{{investigationId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["investigations", "{{investigationId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Data Leaks",
+      "item": [
+        {
+          "name": "Create Data Leak",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reportId\": \"{{reportId}}\",\n  \"title\": \"Credentials Leaked - Enterprise Database\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/data-leaks",
+              "host": ["{{baseUrl}}"],
+              "path": ["data-leaks"]
+            }
+          }
+        },
+        {
+          "name": "Get All Data Leaks",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/data-leaks?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["data-leaks"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Data Leak by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/data-leaks/{{leakId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["data-leaks", "{{leakId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hacker Groups",
+      "item": [
+        {
+          "name": "Create Hacker Group",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"APT28\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/hacker-groups",
+              "host": ["{{baseUrl}}"],
+              "path": ["hacker-groups"]
+            }
+          }
+        },
+        {
+          "name": "Get All Hacker Groups",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/hacker-groups?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["hacker-groups"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Hacker Group by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/hacker-groups/{{groupId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["hacker-groups", "{{groupId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Threat Sources",
+      "item": [
+        {
+          "name": "Create Threat Source",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dark Web Forum\",\n  \"type\": \"Forum\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/threat-sources",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-sources"]
+            }
+          }
+        },
+        {
+          "name": "Get All Threat Sources",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/threat-sources?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-sources"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Threat Categories",
+      "item": [
+        {
+          "name": "Create Threat Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Malware\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/threat-categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-categories"]
+            }
+          }
+        },
+        {
+          "name": "Get All Threat Categories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/threat-categories?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["threat-categories"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "analystId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "orgId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "reportId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "indicatorId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "malwareId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "incidentId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "investigationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "leakId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "groupId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sourceId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "categoryId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

@@ -7,6 +7,65 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+enum Role {
+  ADMIN
+  ANALYST
+  MANAGER
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  BANNED
+}
+
+enum ThreatStatus {
+  NEW
+  INVESTIGATING
+  CONFIRMED
+  FALSE_POSITIVE
+  MITIGATED
+  CLOSED
+}
+
+enum AlertLevel {
+  INFO
+  WARNING
+  ERROR
+  CRITICAL
+}
+
+enum ResponseStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  CONTAINED
+  ERADICATED
+  RECOVERED
+  CLOSED
+}
+
+enum InvestigationStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CLOSED
+}
+
+enum ActivityType {
+  RECONNAISSANCE
+  PHISHING
+  MALWARE_DEPLOYMENT
+  DATA_THEFT
+}
+
+enum IndicatorType {
+  IP
+  DOMAIN
+  URL
+  EMAIL
+  HASH
+}
 
 model Admin {
   id        String     @id @default(uuid())
@@ -280,62 +339,3 @@ model Evidence {
   investigation   Investigation @relation(fields: [investigationId], references: [id], onDelete: Cascade)
 }
 
-enum Role {
-  ADMIN
-  ANALYST
-  MANAGER
-}
-
-enum Status {
-  ACTIVE
-  INACTIVE
-  SUSPENDED
-  BANNED
-}
-
-enum ThreatStatus {
-  NEW
-  INVESTIGATING
-  CONFIRMED
-  FALSE_POSITIVE
-  MITIGATED
-  CLOSED
-}
-
-enum AlertLevel {
-  INFO
-  WARNING
-  ERROR
-  CRITICAL
-}
-
-enum ResponseStatus {
-  NOT_STARTED
-  IN_PROGRESS
-  CONTAINED
-  ERADICATED
-  RECOVERED
-  CLOSED
-}
-
-enum InvestigationStatus {
-  OPEN
-  IN_PROGRESS
-  COMPLETED
-  CLOSED
-}
-
-enum ActivityType {
-  RECONNAISSANCE
-  PHISHING
-  MALWARE_DEPLOYMENT
-  DATA_THEFT
-}
-
-enum IndicatorType {
-  IP
-  DOMAIN
-  URL
-  EMAIL
-  HASH
-}
