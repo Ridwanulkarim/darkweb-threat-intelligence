@@ -71,9 +71,9 @@
                   "type": "text/javascript",
                   "exec": [
                     "const jsonData = pm.response.json();",
-                    "if (jsonData?.data?.token) {",
-                    "    pm.environment.set(\"token\", jsonData.data.token);",
-                    "    console.log(\"Saved token to environment variable: token\");",
+                    "if (jsonData && jsonData.data && jsonData.data.token) {",
+                    "    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+                    "    console.log(\"Saved token to collection variable: token\");",
                     "} else {",
                     "    console.log(\"Login response did not contain token.\");",
                     "}"
@@ -165,9 +165,9 @@
                   "type": "text/javascript",
                   "exec": [
                     "const jsonData = pm.response.json();",
-                    "if (jsonData?.data?.token) {",
-                    "    pm.environment.set(\"token\", jsonData.data.token);",
-                    "    console.log(\"Saved token to environment variable: token\");",
+                    "if (jsonData && jsonData.data && jsonData.data.token) {",
+                    "    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+                    "    console.log(\"Saved token to collection variable: token\");",
                     "} else {",
                     "    console.log(\"Login response did not contain token.\");",
                     "}"
@@ -457,6 +457,10 @@
             "method": "POST",
             "header": [
               {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
                 "key": "Content-Type",
                 "value": "application/json"
               }
@@ -498,7 +502,13 @@
                   "value": "10"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -514,7 +524,13 @@
                 "organizations",
                 "{{orgId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -522,6 +538,10 @@
           "request": {
             "method": "PUT",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -556,7 +576,13 @@
                 "organizations",
                 "{{orgId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         }
       ],
@@ -579,6 +605,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -625,7 +655,13 @@
                   "value": "NEW"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -641,7 +677,13 @@
                 "threat-reports",
                 "{{reportId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -649,6 +691,10 @@
           "request": {
             "method": "PUT",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -683,7 +729,13 @@
                 "threat-reports",
                 "{{reportId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         }
       ],
@@ -706,6 +758,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -752,7 +808,13 @@
                   "value": "IP"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -768,7 +830,13 @@
                 "threat-indicators",
                 "{{indicatorId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         }
       ],
@@ -791,6 +859,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -833,7 +905,13 @@
                   "value": "10"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -849,7 +927,13 @@
                 "malware",
                 "{{malwareId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         }
       ],
@@ -872,6 +956,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -918,7 +1006,13 @@
                   "value": "IN_PROGRESS"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -934,7 +1028,13 @@
                 "incidents",
                 "{{incidentId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -942,6 +1042,10 @@
           "request": {
             "method": "PUT",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -983,6 +1087,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -1029,7 +1137,13 @@
                   "value": "IN_PROGRESS"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -1045,7 +1159,13 @@
                 "investigations",
                 "{{investigationId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -1053,6 +1173,10 @@
           "request": {
             "method": "PUT",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -1095,6 +1219,10 @@
             "method": "POST",
             "header": [
               {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
                 "key": "Content-Type",
                 "value": "application/json"
               }
@@ -1136,7 +1264,13 @@
                   "value": "10"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -1152,7 +1286,13 @@
                 "data-leaks",
                 "{{leakId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         }
       ],
@@ -1175,6 +1315,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -1217,7 +1361,13 @@
                   "value": "10"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         },
         {
@@ -1233,7 +1383,13 @@
                 "hacker-groups",
                 "{{groupId}}"
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         }
       ],
@@ -1256,6 +1412,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -1298,7 +1458,13 @@
                   "value": "10"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         }
       ],
@@ -1321,6 +1487,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -1363,7 +1533,13 @@
                   "value": "10"
                 }
               ]
-            }
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
           }
         }
       ],
