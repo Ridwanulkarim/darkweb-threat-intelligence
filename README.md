@@ -48,6 +48,8 @@ NODE_ENV=development
 DEBUG=false
 ```
 
+> Reminder: for local testing, start the server with `npm run dev` and make sure `.env` has a valid `DATABASE_URL` (including `?sslmode=require` if your DB needs it) plus a proper `JWT_SECRET`.
+
 ### Database setup
 
 ```bash
