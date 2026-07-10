@@ -1,15 +1,16 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const helpers = {
-  // Hash password
+  // Hash password using bcrypt
   hashPassword: (password) => {
-    return crypto.createHash('sha256').update(password).digest('hex');
+    return bcrypt.hashSync(password, 10);
   },
 
-  // Compare password
+  // Compare password using bcrypt
   comparePassword: (password, hash) => {
-    return crypto.createHash('sha256').update(password).digest('hex') === hash;
+    return bcrypt.compareSync(password, hash);
   },
 
   // Generate JWT token
