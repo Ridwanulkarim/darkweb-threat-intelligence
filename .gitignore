@@ -1,5 +1,12 @@
 node_modules
 # Keep environment variables out of version control
 .env
+.env.save
 
 /generated/prisma
+
+# Logs
+src/logs/*.log
+
+# Local editor settings
+.vscode/
