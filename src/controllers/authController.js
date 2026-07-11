@@ -4,7 +4,7 @@ const { formatResponse, formatErrorResponse } = require('../utils/helpers');
 const authController = {
   registerAdmin: async (req, res, next) => {
     try {
-      const result = await authService.registerAdmin(req.body);
+      const result = await authService.registerAdmin(req.body || {});
       res.status(201).json(formatResponse(result, 'Admin registered successfully'));
     } catch (error) {
       next(error);
@@ -23,7 +23,7 @@ const authController = {
 
   registerAnalyst: async (req, res, next) => {
     try {
-      const result = await authService.registerAnalyst(req.body);
+      const result = await authService.registerAnalyst(req.body || {});
       res.status(201).json(formatResponse(result, 'Analyst registered successfully'));
     } catch (error) {
       next(error);

@@ -4,6 +4,9 @@ const { formatResponse, formatErrorResponse, getPaginationParams } = require('..
 const dataLeakController = {
   createLeak: async (req, res, next) => {
     try {
+      if (!req.body || !req.body.reportId || !req.body.title) {
+        return res.status(400).json(formatErrorResponse('Missing required fields: reportId, title', 400));
+      }
       const { reportId, title } = req.body;
       const leak = await prisma.dataLeak.create({
         data: { reportId, title },

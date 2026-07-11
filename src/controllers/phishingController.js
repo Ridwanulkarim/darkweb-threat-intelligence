@@ -4,6 +4,9 @@ const { formatResponse, formatErrorResponse, getPaginationParams } = require('..
 const phishingController = {
   createAttack: async (req, res, next) => {
     try {
+      if (!req.body || !req.body.reportId || !req.body.url) {
+        return res.status(400).json(formatErrorResponse('Missing required fields: reportId, url', 400));
+      }
       const { reportId, url } = req.body;
       const attack = await prisma.phishingAttack.create({
         data: { reportId, url },

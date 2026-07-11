@@ -6,11 +6,25 @@ const authService = {
   // Register admin
   registerAdmin: async (data) => {
     try {
+      if (!data) {
+        const error = new Error('Request body is required');
+        error.status = 400;
+        throw error;
+      }
+
+      const { name, email, password } = data;
+
+      if (!name || !email || !password) {
+        const error = new Error('Name, email, and password are required');
+        error.status = 400;
+        throw error;
+      }
+
       const hashedPassword = hashPassword(data.password);
       const admin = await prisma.admin.create({
         data: {
-          name: data.name,
-          email: data.email,
+          name,
+          email,
           password: hashedPassword,
           status: 'ACTIVE'
         }
@@ -26,6 +40,12 @@ const authService = {
   // Admin login
   adminLogin: async (email, password) => {
     try {
+      if (!email || !password) {
+        const error = new Error('Email and password are required');
+        error.status = 400;
+        throw error;
+      }
+
       const admin = await prisma.admin.findUnique({ where: { email } });
       if (!admin) throw new Error('Admin not found');
 
@@ -46,13 +66,27 @@ const authService = {
   // Register analyst
   registerAnalyst: async (data) => {
     try {
+      if (!data) {
+        const error = new Error('Request body is required');
+        error.status = 400;
+        throw error;
+      }
+
+      const { name, email, password, role } = data;
+
+      if (!name || !email || !password) {
+        const error = new Error('Name, email, and password are required');
+        error.status = 400;
+        throw error;
+      }
+
       const hashedPassword = hashPassword(data.password);
       const analyst = await prisma.analyst.create({
         data: {
-          name: data.name,
-          email: data.email,
+          name,
+          email,
           password: hashedPassword,
-          role: data.role || 'ANALYST',
+          role: role || 'ANALYST',
           status: 'ACTIVE'
         }
       });
@@ -67,6 +101,12 @@ const authService = {
   // Analyst login
   analystLogin: async (email, password) => {
     try {
+      if (!email || !password) {
+        const error = new Error('Email and password are required');
+        error.status = 400;
+        throw error;
+      }
+
       const analyst = await prisma.analyst.findUnique({ where: { email } });
       if (!analyst) throw new Error('Analyst not found');
 

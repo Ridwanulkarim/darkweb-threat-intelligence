@@ -4,6 +4,9 @@ const { formatResponse, formatErrorResponse, getPaginationParams } = require('..
 const investigationController = {
   createInvestigation: async (req, res, next) => {
     try {
+      if (!req.body || !req.body.reportId || !req.body.analystId) {
+        return res.status(400).json(formatErrorResponse('Missing required fields: reportId, analystId', 400));
+      }
       const { reportId, analystId, status } = req.body;
       const investigation = await prisma.investigation.create({
         data: { reportId, analystId, status: status || 'OPEN' },

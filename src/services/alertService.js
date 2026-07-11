@@ -5,6 +5,9 @@ const alertService = {
   // Create a new alert
   createAlert: async (data) => {
     try {
+      if (!data || !data.reportId || !data.message || !data.level) {
+        throw new Error('Missing required fields: reportId, message, level');
+      }
       const alert = await prisma.threatAlert.create({
         data: {
           reportId: data.reportId,

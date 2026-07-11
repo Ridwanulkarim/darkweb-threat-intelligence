@@ -4,6 +4,9 @@ const { formatResponse, formatErrorResponse, getPaginationParams } = require('..
 const threatIndicatorController = {
   createIndicator: async (req, res, next) => {
     try {
+      if (!req.body || !req.body.reportId || !req.body.type || !req.body.value) {
+        return res.status(400).json(formatErrorResponse('Missing required fields: reportId, type, value', 400));
+      }
       const { reportId, type, value } = req.body;
       const indicator = await prisma.threatIndicator.create({
         data: { reportId, type, value },

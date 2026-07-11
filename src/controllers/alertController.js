@@ -5,6 +5,9 @@ const { formatResponse, formatErrorResponse, getPaginationParams } = require('..
 const alertController = {
   createAlert: async (req, res, next) => {
     try {
+      if (!req.body || !req.body.reportId || !req.body.message || !req.body.level) {
+        return res.status(400).json(formatErrorResponse('Missing required fields: reportId, message, level', 400));
+      }
       const alert = await alertService.createAlert(req.body);
       res.status(201).json(formatResponse(alert, 'Alert created successfully'));
     } catch (error) {
