@@ -1,0 +1,5 @@
+[2026-07-12T12:00:00.000Z] ERROR: Connection to database failed: <REDACTED-DB-URL>
+[2026-07-12T12:01:00.000Z] ERROR: JWT verification failed for user <REDACTED-EMAIL>
+[2026-07-12T12:02:00.000Z] ERROR: Failed to fetch threat report id=<REDACTED-REPORT-ID>: record not found
+[2026-07-12T12:03:00.000Z] WARN: Rate limit reached for IP <REDACTED-IP>
+[2026-07-12T12:04:00.000Z] INFO: Background job `syncThreatSources` completed successfully
