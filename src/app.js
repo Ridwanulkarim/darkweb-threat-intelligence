@@ -7,6 +7,15 @@ const authMiddleware = require('./middleware/authMiddleware');
 // Load environment variables
 dotenv.config();
 
+// Auto-append sslmode=require for remote cloud databases (Render, Supabase, Neon)
+if (process.env.DATABASE_URL) {
+  const url = process.env.DATABASE_URL;
+  if (!url.includes("sslmode=") && !url.includes("localhost") && !url.includes("127.0.0.1")) {
+    const sep = url.includes("?") ? "&" : "?";
+    process.env.DATABASE_URL = `${url}${sep}sslmode=require`;
+  }
+}
+
 const app = express();
 
 // Middleware
