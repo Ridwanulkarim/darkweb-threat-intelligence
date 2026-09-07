@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "nodemon src/app.js",
     "start": "node src/app.js",
+    "build": "npm --prefix frontend install && npm run frontend:build && npx prisma generate",
+    "render:build": "npm --prefix frontend install && npm run frontend:build && npx prisma generate && npx prisma db push",
     "test": "echo \"Error: no test specified\" && exit 1",
     "frontend:install": "npm --prefix frontend install",
     "frontend:dev": "npm --prefix frontend run dev",
