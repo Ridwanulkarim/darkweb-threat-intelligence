@@ -4,6 +4,7 @@ A Node.js + Express backend for managing dark web threat intelligence, security 
 
 This repository includes:
 
+- `frontend/` — Modern React + Vite + Tailwind CSS Cyber Threat Intelligence & SOC Dashboard
 - `src/` — Express application, routes, controllers, middleware, services, and utilities
 - `prisma/` — Prisma schema and database migrations
 - `docs/` — Database schema documentation and DBML
@@ -13,6 +14,8 @@ This repository includes:
 
 ## Features
 
+- **Cyber Threat Intelligence (CTI) Frontend**: Interactive dark-mode SOC dashboard with live threat feeds, IOC lookup tool, APT group tracking, data leak searches, incident mitigation boards, and digital forensics evidence vaults
+- **Hybrid Mode Support**: Run seamlessly connected to the live Node.js REST API or in standalone intelligence simulation mode
 - RESTful CRUD endpoints for 25 database models
 - JWT authentication for Admin and Analyst roles
 - Role-based route protection
@@ -66,9 +69,12 @@ npm run dev
 Server defaults to `http://localhost:3000`.
 
 ## Available Scripts
-
-- `npm run dev` — start server with `nodemon`
-- `npm start` — start server with Node
+ 
+- `npm run dev` — start backend server with `nodemon`
+- `npm start` — start backend server with Node
+- `npm run frontend:dev` — start frontend development server with Vite (defaults to `http://localhost:5173`)
+- `npm run frontend:build` — build frontend production assets into `frontend/dist`
+- `npm run frontend:install` — install frontend dependencies
 
 ## Documentation
 
