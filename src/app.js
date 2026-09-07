@@ -97,6 +97,22 @@ app.use(errorMiddleware);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+
+  // Safely sync database schema at runtime when live network is established
+  if (process.env.DATABASE_URL) {
+    try {
+      const { exec } = require('child_process');
+      exec('npx prisma db push --skip-generate', (err, stdout, stderr) => {
+        if (err) {
+          console.warn('[Prisma] Runtime schema sync notice:', err.message);
+        } else {
+          console.log('✓ Database schema synchronized successfully at runtime');
+        }
+      });
+    } catch (e) {
+      console.warn('[Prisma] Startup migration notice:', e.message);
+    }
+  }
 });
 
 module.exports = app;
