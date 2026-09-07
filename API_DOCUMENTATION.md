@@ -3,7 +3,8 @@
 ## Overview
 Comprehensive REST API for managing dark web threat intelligence, incidents, and security analysis.
 
-**Base URL**: `http://localhost:3000/api`  
+**Production Base URL**: `https://darkweb-threat-intelligence-2.onrender.com/api`  
+**Local Base URL**: `http://localhost:3000/api`  
 **API Version**: 1.0.0  
 **Authentication**: JWT Bearer Token
 

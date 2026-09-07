@@ -1,6 +1,10 @@
-# Dark Web Threat Intelligence API
+# Dark Web Threat Intelligence Platform
 
-A Node.js + Express backend for managing dark web threat intelligence, security incidents, investigations, and forensic evidence.
+> 🚀 **Live Deployment**: [https://darkweb-threat-intelligence-2.onrender.com/](https://darkweb-threat-intelligence-2.onrender.com/)  
+> 🌐 **Live API Base URL**: `https://darkweb-threat-intelligence-2.onrender.com/api`  
+> 🩺 **Live Health Check**: [https://darkweb-threat-intelligence-2.onrender.com/health](https://darkweb-threat-intelligence-2.onrender.com/health)
+
+A modern, fullstack Cyber Threat Intelligence (CTI) & SOC incident response platform for managing dark web intelligence, security incidents, digital forensics investigations, and threat indicators.
 
 This repository includes:
 
