@@ -8,11 +8,16 @@ const authMiddleware = (req, res, next) => {
       return res.status(401).json({ error: 'No token provided' });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      return res.status(500).json({ error: 'Server authentication configuration error: JWT_SECRET missing' });
+    }
+
+    const decoded = jwt.verify(token, secret);
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Invalid token', message: error.message });
+    res.status(401).json({ error: 'Invalid or expired token', message: error.message });
   }
 };
 

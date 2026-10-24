@@ -591,26 +591,6 @@ export default function App() {
               </button>
             </div>
 
-            {/* Quick-fill helpers */}
-            <div className="p-2.5 rounded-xl bg-slate-900 border border-purple-500/20 text-[11px] space-y-1.5">
-              <span className="text-purple-300/60 uppercase block font-semibold">Quick-Fill Demo Credentials:</span>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setAuthForm({ type: 'analyst', email: 'elena.rostova@cyberthreat.io', password: 'password123' })}
-                  className="px-2 py-1 rounded bg-purple-950/50 hover:bg-purple-900/60 text-purple-200 border border-purple-500/30"
-                >
-                  Elena Rostova (Analyst)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setAuthForm({ type: 'admin', email: 'admin@cyberthreat.io', password: 'password123' })}
-                  className="px-2 py-1 rounded bg-indigo-950/50 hover:bg-indigo-900/60 text-indigo-200 border border-indigo-500/30"
-                >
-                  Root Admin
-                </button>
-              </div>
-            </div>
 
             <form onSubmit={handleAuthSubmit} className="space-y-3">
               <div>

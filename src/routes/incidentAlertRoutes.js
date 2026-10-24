@@ -5,12 +5,16 @@ const analystMiddleware = require('../middleware/analystMiddleware');
 router.use(authMiddleware);
 router.use(analystMiddleware);
 const prisma = require('../database/prisma');
-const { formatResponse, getPaginationParams } = require('../utils/helpers');
+const { formatResponse, formatErrorResponse, getPaginationParams } = require('../utils/helpers');
 
 router.post('/', async (req, res, next) => {
   try {
+    const { incidentId, level, message } = req.body || {};
+    if (!incidentId || !level || !message) {
+      return res.status(400).json(formatErrorResponse('incidentId, level, and message are required', 400));
+    }
     const alert = await prisma.incidentAlert.create({
-      data: req.body,
+      data: { incidentId, level, message },
       include: { incident: true }
     });
     res.status(201).json(formatResponse(alert));
@@ -50,6 +54,7 @@ router.get('/:id', async (req, res, next) => {
       where: { id: req.params.id },
       include: { incident: true }
     });
+    if (!alert) return res.status(404).json(formatErrorResponse('Alert not found', 404));
     res.json(formatResponse(alert));
   } catch (error) {
     next(error);
@@ -59,7 +64,7 @@ router.get('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await prisma.incidentAlert.delete({ where: { id: req.params.id } });
-    res.json(formatResponse(null));
+    res.json(formatResponse(null, 'Alert deleted successfully'));
   } catch (error) {
     next(error);
   }

@@ -5,14 +5,26 @@ const analystMiddleware = require('../middleware/analystMiddleware');
 router.use(authMiddleware);
 router.use(analystMiddleware);
 const prisma = require('../database/prisma');
-const { formatResponse, getPaginationParams } = require('../utils/helpers');
+const { formatResponse, formatErrorResponse, getPaginationParams } = require('../utils/helpers');
+
+// Safe admin selector omitting password
+const adminSelect = {
+  id: true,
+  name: true,
+  email: true,
+  status: true
+};
 
 // Audit logs routes
 router.post('/', async (req, res, next) => {
   try {
+    const { adminId, action, target } = req.body || {};
+    if (!adminId || !action || !target) {
+      return res.status(400).json(formatErrorResponse('adminId, action, and target are required', 400));
+    }
     const log = await prisma.auditLog.create({
-      data: req.body,
-      include: { admin: true }
+      data: { adminId, action, target },
+      include: { admin: { select: adminSelect } }
     });
     res.status(201).json(formatResponse(log));
   } catch (error) {
@@ -31,7 +43,7 @@ router.get('/', async (req, res, next) => {
         where,
         skip,
         take,
-        include: { admin: true },
+        include: { admin: { select: adminSelect } },
         orderBy: { createdAt: 'desc' }
       }),
       prisma.auditLog.count({ where })
@@ -47,8 +59,9 @@ router.get('/:id', async (req, res, next) => {
   try {
     const log = await prisma.auditLog.findUnique({
       where: { id: req.params.id },
-      include: { admin: true }
+      include: { admin: { select: adminSelect } }
     });
+    if (!log) return res.status(404).json(formatErrorResponse('Audit log not found', 404));
     res.json(formatResponse(log));
   } catch (error) {
     next(error);

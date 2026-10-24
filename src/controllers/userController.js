@@ -1,12 +1,34 @@
 const prisma = require('../database/prisma');
-const { formatResponse, formatErrorResponse, getPaginationParams } = require('../utils/helpers');
+const { formatResponse, formatErrorResponse, getPaginationParams, hashPassword } = require('../utils/helpers');
+
+// Safe user selector omitting password
+const userSelect = {
+  id: true,
+  orgId: true,
+  email: true,
+  status: true,
+  createdAt: true,
+  updatedAt: true
+};
 
 const userController = {
   createUser: async (req, res, next) => {
     try {
-      const { orgId, email, password, status } = req.body;
+      const { orgId, email, password, status } = req.body || {};
+
+      if (!orgId || !email || !password) {
+        return res.status(400).json(formatErrorResponse('Organization ID, email, and password are required', 400));
+      }
+
+      const hashedPassword = hashPassword(password);
       const user = await prisma.userAccount.create({
-        data: { orgId, email, password, status: status || 'ACTIVE' }
+        data: { 
+          orgId, 
+          email, 
+          password: hashedPassword, 
+          status: status || 'ACTIVE' 
+        },
+        select: userSelect
       });
       res.status(201).json(formatResponse(user, 'User created successfully'));
     } catch (error) {
@@ -27,7 +49,11 @@ const userController = {
           where,
           skip,
           take,
-          include: { organization: true, accessLogs: { take: 3 } },
+          select: {
+            ...userSelect,
+            organization: true,
+            accessLogs: { take: 3 }
+          },
           orderBy: { createdAt: 'desc' }
         }),
         prisma.userAccount.count({ where })
@@ -43,7 +69,11 @@ const userController = {
     try {
       const user = await prisma.userAccount.findUnique({
         where: { id: req.params.id },
-        include: { organization: true, accessLogs: true }
+        select: {
+          ...userSelect,
+          organization: true,
+          accessLogs: true
+        }
       });
       if (!user) return res.status(404).json(formatErrorResponse('User not found', 404));
       res.json(formatResponse(user));
@@ -54,10 +84,21 @@ const userController = {
 
   updateUser: async (req, res, next) => {
     try {
+      const { orgId, email, password, status } = req.body || {};
+
+      const updateData = {};
+      if (orgId !== undefined) updateData.orgId = orgId;
+      if (email !== undefined) updateData.email = email;
+      if (status !== undefined) updateData.status = status;
+      if (password) updateData.password = hashPassword(password);
+
       const user = await prisma.userAccount.update({
         where: { id: req.params.id },
-        data: req.body,
-        include: { organization: true }
+        data: updateData,
+        select: {
+          ...userSelect,
+          organization: true
+        }
       });
       res.json(formatResponse(user, 'User updated successfully'));
     } catch (error) {

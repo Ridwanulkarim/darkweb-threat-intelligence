@@ -5,11 +5,17 @@ const analystMiddleware = require('../middleware/analystMiddleware');
 router.use(authMiddleware);
 router.use(analystMiddleware);
 const prisma = require('../database/prisma');
-const { formatResponse, getPaginationParams } = require('../utils/helpers');
+const { formatResponse, formatErrorResponse, getPaginationParams } = require('../utils/helpers');
 
 router.post('/', async (req, res, next) => {
   try {
-    const source = await prisma.threatSource.create({ data: req.body });
+    const { name, type, url, reliability } = req.body || {};
+    if (!name || !type) {
+      return res.status(400).json(formatErrorResponse('name and type are required', 400));
+    }
+    const source = await prisma.threatSource.create({
+      data: { name, type, url, reliability }
+    });
     res.status(201).json(formatResponse(source));
   } catch (error) {
     next(error);
@@ -38,6 +44,7 @@ router.get('/:id', async (req, res, next) => {
       where: { id: req.params.id },
       include: { reports: { take: 10 } }
     });
+    if (!source) return res.status(404).json(formatErrorResponse('Source not found', 404));
     res.json(formatResponse(source));
   } catch (error) {
     next(error);
@@ -46,11 +53,18 @@ router.get('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
+    const { name, type, url, reliability } = req.body || {};
+    const updateData = {};
+    if (name !== undefined) updateData.name = name;
+    if (type !== undefined) updateData.type = type;
+    if (url !== undefined) updateData.url = url;
+    if (reliability !== undefined) updateData.reliability = reliability;
+
     const source = await prisma.threatSource.update({
       where: { id: req.params.id },
-      data: req.body
+      data: updateData
     });
-    res.json(formatResponse(source));
+    res.json(formatResponse(source, 'Source updated successfully'));
   } catch (error) {
     next(error);
   }
@@ -59,7 +73,7 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await prisma.threatSource.delete({ where: { id: req.params.id } });
-    res.json(formatResponse(null));
+    res.json(formatResponse(null, 'Source deleted successfully'));
   } catch (error) {
     next(error);
   }

@@ -51,9 +51,17 @@ const hackerGroupController = {
 
   updateGroup: async (req, res, next) => {
     try {
+      const { name, alias, origin, motivation, status } = req.body || {};
+      const updateData = {};
+      if (name !== undefined) updateData.name = name;
+      if (alias !== undefined) updateData.alias = alias;
+      if (origin !== undefined) updateData.origin = origin;
+      if (motivation !== undefined) updateData.motivation = motivation;
+      if (status !== undefined) updateData.status = status;
+
       const group = await prisma.hackerGroup.update({
         where: { id: req.params.id },
-        data: req.body,
+        data: updateData,
         include: { activities: true }
       });
       res.json(formatResponse(group, 'Hacker group updated successfully'));

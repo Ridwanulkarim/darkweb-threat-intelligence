@@ -5,13 +5,26 @@ const analystMiddleware = require('../middleware/analystMiddleware');
 router.use(authMiddleware);
 router.use(analystMiddleware);
 const prisma = require('../database/prisma');
-const { formatResponse, getPaginationParams } = require('../utils/helpers');
+const { formatResponse, formatErrorResponse, getPaginationParams } = require('../utils/helpers');
+
+// Safe analyst selector omitting password
+const analystSelect = {
+  id: true,
+  name: true,
+  email: true,
+  role: true,
+  status: true
+};
 
 router.post('/', async (req, res, next) => {
   try {
+    const { incidentId, analystId, action, status } = req.body || {};
+    if (!incidentId || !analystId || !action) {
+      return res.status(400).json(formatErrorResponse('incidentId, analystId, and action are required', 400));
+    }
     const response = await prisma.incidentResponse.create({
-      data: req.body,
-      include: { analyst: true, incident: true }
+      data: { incidentId, analystId, action, status: status || 'PENDING' },
+      include: { analyst: { select: analystSelect }, incident: true }
     });
     res.status(201).json(formatResponse(response));
   } catch (error) {
@@ -32,7 +45,7 @@ router.get('/', async (req, res, next) => {
         where,
         skip,
         take,
-        include: { analyst: true, incident: true },
+        include: { analyst: { select: analystSelect }, incident: true },
         orderBy: { createdAt: 'desc' }
       }),
       prisma.incidentResponse.count({ where })
@@ -48,8 +61,9 @@ router.get('/:id', async (req, res, next) => {
   try {
     const response = await prisma.incidentResponse.findUnique({
       where: { id: req.params.id },
-      include: { analyst: true, incident: true }
+      include: { analyst: { select: analystSelect }, incident: true }
     });
+    if (!response) return res.status(404).json(formatErrorResponse('Response not found', 404));
     res.json(formatResponse(response));
   } catch (error) {
     next(error);
@@ -59,7 +73,7 @@ router.get('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await prisma.incidentResponse.delete({ where: { id: req.params.id } });
-    res.json(formatResponse(null));
+    res.json(formatResponse(null, 'Response deleted successfully'));
   } catch (error) {
     next(error);
   }

@@ -5,12 +5,16 @@ const analystMiddleware = require('../middleware/analystMiddleware');
 router.use(authMiddleware);
 router.use(analystMiddleware);
 const prisma = require('../database/prisma');
-const { formatResponse, getPaginationParams } = require('../utils/helpers');
+const { formatResponse, formatErrorResponse, getPaginationParams } = require('../utils/helpers');
 
 router.post('/', async (req, res, next) => {
   try {
+    const { investigationId, fileName, sha256 } = req.body || {};
+    if (!investigationId || !fileName || !sha256) {
+      return res.status(400).json(formatErrorResponse('investigationId, fileName, and sha256 are required', 400));
+    }
     const evidence = await prisma.evidence.create({
-      data: req.body,
+      data: { investigationId, fileName, sha256 },
       include: { investigation: true }
     });
     res.status(201).json(formatResponse(evidence));
@@ -48,6 +52,7 @@ router.get('/:id', async (req, res, next) => {
       where: { id: req.params.id },
       include: { investigation: true }
     });
+    if (!evidence) return res.status(404).json(formatErrorResponse('Evidence not found', 404));
     res.json(formatResponse(evidence));
   } catch (error) {
     next(error);
@@ -57,7 +62,7 @@ router.get('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await prisma.evidence.delete({ where: { id: req.params.id } });
-    res.json(formatResponse(null));
+    res.json(formatResponse(null, 'Evidence deleted successfully'));
   } catch (error) {
     next(error);
   }

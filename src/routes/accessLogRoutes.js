@@ -5,14 +5,26 @@ const analystMiddleware = require('../middleware/analystMiddleware');
 router.use(authMiddleware);
 router.use(analystMiddleware);
 const prisma = require('../database/prisma');
-const { formatResponse, getPaginationParams } = require('../utils/helpers');
+const { formatResponse, formatErrorResponse, getPaginationParams } = require('../utils/helpers');
+
+// Safe user selector omitting password
+const userSelect = {
+  id: true,
+  orgId: true,
+  email: true,
+  status: true
+};
 
 // Access logs routes
 router.post('/', async (req, res, next) => {
   try {
+    const { userId, ip, status } = req.body || {};
+    if (!userId || !ip) {
+      return res.status(400).json(formatErrorResponse('userId and ip are required', 400));
+    }
     const log = await prisma.accessLog.create({
-      data: req.body,
-      include: { user: true }
+      data: { userId, ip, status: status || 'SUCCESS' },
+      include: { user: { select: userSelect } }
     });
     res.status(201).json(formatResponse(log));
   } catch (error) {
@@ -26,15 +38,18 @@ router.get('/', async (req, res, next) => {
     const { skip, take } = getPaginationParams(parseInt(page), parseInt(limit));
     const where = userId ? { userId } : {};
 
-    const logs = await prisma.accessLog.findMany({
-      where,
-      skip,
-      take,
-      include: { user: true },
-      orderBy: { createdAt: 'desc' }
-    });
+    const [logs, total] = await Promise.all([
+      prisma.accessLog.findMany({
+        where,
+        skip,
+        take,
+        include: { user: { select: userSelect } },
+        orderBy: { createdAt: 'desc' }
+      }),
+      prisma.accessLog.count({ where })
+    ]);
 
-    res.json(formatResponse(logs));
+    res.json(formatResponse({ logs, total, page: parseInt(page) }));
   } catch (error) {
     next(error);
   }
@@ -44,8 +59,9 @@ router.get('/:id', async (req, res, next) => {
   try {
     const log = await prisma.accessLog.findUnique({
       where: { id: req.params.id },
-      include: { user: true }
+      include: { user: { select: userSelect } }
     });
+    if (!log) return res.status(404).json(formatErrorResponse('Access log not found', 404));
     res.json(formatResponse(log));
   } catch (error) {
     next(error);

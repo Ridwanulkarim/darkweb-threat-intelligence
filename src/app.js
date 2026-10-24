@@ -1,11 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const crypto = require('crypto');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const authMiddleware = require('./middleware/authMiddleware');
 
 // Load environment variables
 dotenv.config();
+
+// Enforce JWT_SECRET Security: Disallow empty or hardcoded fallback secrets
+if (!process.env.JWT_SECRET) {
+  if (process.env.NODE_ENV === 'production' || process.env.RENDER) {
+    console.error('FATAL [Security]: JWT_SECRET environment variable is missing in production. Refusing to start.');
+    process.exit(1);
+  } else {
+    console.warn('[Security Notice]: JWT_SECRET not found in .env. Generated ephemeral 256-bit cryptographic secret for this local session.');
+    process.env.JWT_SECRET = crypto.randomBytes(32).toString('hex');
+  }
+}
 
 // Auto-append sslmode=require for remote cloud databases (Render, Supabase, Neon)
 if (process.env.DATABASE_URL) {
@@ -18,8 +30,26 @@ if (process.env.DATABASE_URL) {
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Secure CORS configuration
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim()) 
+  : [
+      'https://darkweb-threat-intelligence-2.onrender.com',
+      'http://localhost:3000',
+      'http://localhost:5173'
+    ];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl, same-origin SPA)
+    if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -97,22 +127,6 @@ app.use(errorMiddleware);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-
-  // Safely sync database schema at runtime when live network is established
-  if (process.env.DATABASE_URL) {
-    try {
-      const { exec } = require('child_process');
-      exec('npx prisma db push --skip-generate', (err, stdout, stderr) => {
-        if (err) {
-          console.warn('[Prisma] Runtime schema sync notice:', err.message);
-        } else {
-          console.log('✓ Database schema synchronized successfully at runtime');
-        }
-      });
-    } catch (e) {
-      console.warn('[Prisma] Startup migration notice:', e.message);
-    }
-  }
 });
 
 module.exports = app;

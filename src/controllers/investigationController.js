@@ -58,9 +58,16 @@ const investigationController = {
 
   updateInvestigation: async (req, res, next) => {
     try {
+      const { title, status, reportId, analystId } = req.body || {};
+      const updateData = {};
+      if (title !== undefined) updateData.title = title;
+      if (status !== undefined) updateData.status = status;
+      if (reportId !== undefined) updateData.reportId = reportId;
+      if (analystId !== undefined) updateData.analystId = analystId;
+
       const investigation = await prisma.investigation.update({
         where: { id: req.params.id },
-        data: req.body,
+        data: updateData,
         include: { analyst: true, report: true, evidences: true }
       });
       res.json(formatResponse(investigation, 'Investigation updated successfully'));

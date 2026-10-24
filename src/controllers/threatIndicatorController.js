@@ -58,9 +58,17 @@ const threatIndicatorController = {
 
   updateIndicator: async (req, res, next) => {
     try {
+      const { type, value, confidence, status, reportId } = req.body || {};
+      const updateData = {};
+      if (type !== undefined) updateData.type = type;
+      if (value !== undefined) updateData.value = value;
+      if (confidence !== undefined) updateData.confidence = confidence;
+      if (status !== undefined) updateData.status = status;
+      if (reportId !== undefined) updateData.reportId = reportId;
+
       const indicator = await prisma.threatIndicator.update({
         where: { id: req.params.id },
-        data: req.body,
+        data: updateData,
         include: { report: true }
       });
       res.json(formatResponse(indicator, 'Indicator updated successfully'));

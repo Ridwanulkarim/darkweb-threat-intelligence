@@ -15,7 +15,11 @@ const helpers = {
 
   // Generate JWT token
   generateToken: (payload, expiresIn = '24h') => {
-    return jwt.sign(payload, process.env.JWT_SECRET || 'your-secret-key', { expiresIn });
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new Error('FATAL: JWT_SECRET environment variable is missing.');
+    }
+    return jwt.sign(payload, secret, { expiresIn });
   },
 
   // Validate email

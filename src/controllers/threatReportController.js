@@ -69,9 +69,18 @@ const threatReportController = {
 
   updateReport: async (req, res, next) => {
     try {
+      const { title, status, description, categoryId, sourceId, analystId } = req.body || {};
+      const updateData = {};
+      if (title !== undefined) updateData.title = title;
+      if (status !== undefined) updateData.status = status;
+      if (description !== undefined) updateData.description = description;
+      if (categoryId !== undefined) updateData.categoryId = categoryId;
+      if (sourceId !== undefined) updateData.sourceId = sourceId;
+      if (analystId !== undefined) updateData.analystId = analystId;
+
       const report = await prisma.threatReport.update({
         where: { id: req.params.id },
-        data: req.body,
+        data: updateData,
         include: { source: true, category: true, analyst: true }
       });
       res.json(formatResponse(report, 'Report updated successfully'));

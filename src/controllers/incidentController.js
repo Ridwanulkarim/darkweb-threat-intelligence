@@ -60,9 +60,17 @@ const incidentController = {
 
   updateIncident: async (req, res, next) => {
     try {
+      const { title, organization, severity, status, assignedAnalyst } = req.body || {};
+      const updateData = {};
+      if (title !== undefined) updateData.title = title;
+      if (organization !== undefined) updateData.organization = organization;
+      if (severity !== undefined) updateData.severity = severity;
+      if (status !== undefined) updateData.status = status;
+      if (assignedAnalyst !== undefined) updateData.assignedAnalyst = assignedAnalyst;
+
       const incident = await prisma.incident.update({
         where: { id: req.params.id },
-        data: req.body,
+        data: updateData,
         include: { organization: true, report: true, responses: true }
       });
       res.json(formatResponse(incident, 'Incident updated successfully'));

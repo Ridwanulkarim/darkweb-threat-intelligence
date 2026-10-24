@@ -51,12 +51,19 @@ const organizationController = {
     }
   },
 
-  // Update organization
   updateOrganization: async (req, res, next) => {
     try {
+      const { name, industry, contactEmail, contactPhone, status } = req.body || {};
+      const updateData = {};
+      if (name !== undefined) updateData.name = name;
+      if (industry !== undefined) updateData.industry = industry;
+      if (contactEmail !== undefined) updateData.contactEmail = contactEmail;
+      if (contactPhone !== undefined) updateData.contactPhone = contactPhone;
+      if (status !== undefined) updateData.status = status;
+
       const org = await prisma.organization.update({
         where: { id: req.params.id },
-        data: req.body
+        data: updateData
       });
       res.json(formatResponse(org, 'Organization updated successfully'));
     } catch (error) {
