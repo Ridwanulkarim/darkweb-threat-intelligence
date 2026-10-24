@@ -28,12 +28,16 @@ import {
   UserCheck, 
   Lock,
   Plus,
-  Send
+  Send,
+  LayoutDashboard,
+  AlertOctagon,
+  Menu
 } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [simulationMode, setSimulationMode] = useState(api.simulationMode);
   const [currentUser, setCurrentUser] = useState(api.user);
 
@@ -223,6 +227,8 @@ export default function App() {
         setCurrentUser={setCurrentUser}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
         onOpenNewReportModal={() => setIsNewReportModalOpen(true)}
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
       />
 
       {/* Main Workspace Layout */}
@@ -233,6 +239,8 @@ export default function App() {
           setActiveTab={setActiveTab}
           collapsed={sidebarCollapsed}
           setCollapsed={setSidebarCollapsed}
+          mobileOpen={mobileMenuOpen}
+          setMobileOpen={setMobileMenuOpen}
           counts={{
             reports: reports.length,
             indicators: indicators.length,
@@ -245,7 +253,7 @@ export default function App() {
         />
 
         {/* Dynamic View Area */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full min-w-0 pb-24 md:pb-8">
           {loading ? (
             <div className="flex flex-col items-center justify-center h-96 space-y-3 font-mono text-purple-300">
               <div className="w-8 h-8 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
@@ -647,6 +655,74 @@ export default function App() {
           </div>
         </Modal>
       )}
+
+      {/* Mobile Bottom Quick Navigation Dock */}
+      <nav 
+        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#09041a]/95 backdrop-blur-2xl border-t border-purple-500/25 px-2 py-1.5 flex items-center justify-around shadow-[0_-8px_30px_rgba(0,0,0,0.6)]"
+        aria-label="Mobile quick dock"
+      >
+        <button
+          onClick={() => setActiveTab('overview')}
+          className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all touch-manipulation ${
+            activeTab === 'overview'
+              ? 'text-purple-200 bg-purple-600/20 font-bold shadow-[0_0_12px_rgba(168,85,247,0.3)]'
+              : 'text-slate-400 hover:text-purple-300'
+          }`}
+        >
+          <LayoutDashboard className="w-4 h-4 mb-0.5" />
+          <span className="text-[10px] font-mono">Overview</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('reports')}
+          className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all touch-manipulation relative ${
+            activeTab === 'reports'
+              ? 'text-purple-200 bg-purple-600/20 font-bold shadow-[0_0_12px_rgba(168,85,247,0.3)]'
+              : 'text-slate-400 hover:text-purple-300'
+          }`}
+        >
+          <FileWarning className="w-4 h-4 mb-0.5" />
+          <span className="text-[10px] font-mono">Reports</span>
+          {reports.length > 0 && (
+            <span className="absolute top-0.5 right-1 w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+          )}
+        </button>
+
+        <button
+          onClick={() => setActiveTab('indicators')}
+          className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all touch-manipulation ${
+            activeTab === 'indicators'
+              ? 'text-purple-200 bg-purple-600/20 font-bold shadow-[0_0_12px_rgba(168,85,247,0.3)]'
+              : 'text-slate-400 hover:text-purple-300'
+          }`}
+        >
+          <Crosshair className="w-4 h-4 mb-0.5" />
+          <span className="text-[10px] font-mono">IOCs</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('incidents')}
+          className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all touch-manipulation relative ${
+            activeTab === 'incidents'
+              ? 'text-rose-200 bg-rose-600/20 font-bold shadow-[0_0_12px_rgba(244,63,94,0.3)]'
+              : 'text-slate-400 hover:text-rose-300'
+          }`}
+        >
+          <AlertOctagon className="w-4 h-4 mb-0.5" />
+          <span className="text-[10px] font-mono">Incidents</span>
+          {incidents.filter(i => i.severity === 'CRITICAL').length > 0 && (
+            <span className="absolute top-0.5 right-1 w-2 h-2 rounded-full bg-rose-500 animate-ping" />
+          )}
+        </button>
+
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-purple-300 hover:text-white transition-all touch-manipulation"
+        >
+          <Menu className="w-4 h-4 mb-0.5" />
+          <span className="text-[10px] font-mono">Modules</span>
+        </button>
+      </nav>
 
       {/* Toast Notification */}
       {toast && (

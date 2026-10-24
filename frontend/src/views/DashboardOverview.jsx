@@ -60,7 +60,7 @@ export default function DashboardOverview({
         </div>
 
         {/* Hero Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight max-w-4xl leading-tight md:leading-[1.15]">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight max-w-4xl leading-tight md:leading-[1.15] px-2">
           Defining Security Standards <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-violet-200 to-indigo-300 drop-shadow-[0_0_25px_rgba(168,85,247,0.35)]">
             for Safer Systems
@@ -68,30 +68,30 @@ export default function DashboardOverview({
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-4 text-sm sm:text-base text-purple-200/70 max-w-2xl leading-relaxed font-sans">
+        <p className="mt-3 sm:mt-4 text-xs sm:text-base text-purple-200/70 max-w-2xl leading-relaxed font-sans px-3">
           These standards act as a foundation, guiding organizations in implementing best practices to protect sensitive data, monitor onion marketplaces, and thwart cyber threats.
         </p>
 
         {/* Call-to-Action Buttons */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full max-w-xs sm:max-w-none px-4">
           <button
             onClick={onOpenNewReportModal}
-            className="px-6 py-2.5 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-[0_0_25px_rgba(168,85,247,0.45)] transition-all flex items-center gap-2 group active:scale-95 border border-purple-400/30"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-[0_0_25px_rgba(168,85,247,0.45)] transition-all flex items-center justify-center gap-2 group active:scale-95 border border-purple-400/30 touch-manipulation"
           >
             <span>Ingest Threat Intel</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 shrink-0" />
           </button>
           <button
             onClick={() => onNavigateTab('reports')}
-            className="px-5 py-2.5 rounded-full bg-[#120a2e]/80 hover:bg-[#1a0f3d] border border-purple-500/30 text-purple-200 font-medium text-xs sm:text-sm backdrop-blur-md transition-all flex items-center gap-2"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#120a2e]/80 hover:bg-[#1a0f3d] border border-purple-500/30 text-purple-200 font-medium text-xs sm:text-sm backdrop-blur-md transition-all flex items-center justify-center gap-2 touch-manipulation"
           >
-            <Radio className="w-4 h-4 text-purple-400" />
+            <Radio className="w-4 h-4 text-purple-400 shrink-0" />
             <span>Explore Darknet Feeds</span>
           </button>
         </div>
 
-        {/* 3 Hero Metric Highlights (like the $2.82M Locked / $2.76 price / $323,246 cards on the laptop) */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl">
+        {/* 3 Hero Metric Highlights */}
+        <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full max-w-3xl">
           <div className="cyber-card rounded-2xl p-4 text-center">
             <p className="text-xs uppercase tracking-wider text-purple-300/70 font-mono">Monitored IOCs</p>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-mono mt-1 drop-shadow">

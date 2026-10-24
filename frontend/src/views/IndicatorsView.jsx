@@ -74,43 +74,43 @@ export default function IndicatorsView({ indicators = [], onSelectReportById }) 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-xl font-bold font-mono text-white flex items-center gap-2">
-            <Crosshair className="w-5 h-5 text-cyan-400" />
-            INDICATORS OF COMPROMISE (IOC EXPLORER)
+          <h2 className="text-lg sm:text-xl font-bold font-mono text-white flex items-center gap-2">
+            <Crosshair className="w-5 h-5 text-purple-400 shrink-0" />
+            <span className="truncate">INDICATORS OF COMPROMISE (IOC EXPLORER)</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-purple-200/60 mt-0.5">
             Real-time feed of IPs, domains, hashes, and phishing URLs linked to darknet threat actors.
           </p>
         </div>
 
         <button
           onClick={handleExportJson}
-          className="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono flex items-center gap-1.5 transition-colors"
+          className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-[#120a2e] hover:bg-[#1a0f3d] text-purple-200 border border-purple-500/30 text-xs font-mono flex items-center justify-center gap-1.5 transition-colors touch-manipulation"
         >
-          <Download className="w-4 h-4 text-cyan-400" />
+          <Download className="w-4 h-4 text-purple-400" />
           <span>Export STIX/JSON</span>
         </button>
       </div>
 
       {/* Interactive IOC Quick Scanner Box */}
-      <div className="cyber-card rounded-2xl p-5 border border-cyan-500/30 bg-gradient-to-r from-cyan-950/20 via-[#0d1322] to-[#0d1322]">
-        <h3 className="text-xs font-mono uppercase text-cyan-400 font-bold mb-2 flex items-center gap-2">
-          <Sparkles className="w-3.5 h-3.5" />
+      <div className="cyber-card rounded-2xl p-4 sm:p-5 border border-purple-500/30 bg-gradient-to-r from-purple-950/20 via-[#0e0725] to-[#0e0725]">
+        <h3 className="text-xs font-mono uppercase text-purple-300 font-bold mb-2 flex items-center gap-2">
+          <Sparkles className="w-3.5 h-3.5 text-purple-400" />
           Quick IOC Lookup & Triage Tool
         </h3>
         <form onSubmit={handleScan} className="flex flex-col sm:flex-row gap-2">
           <input
             type="text"
-            placeholder="Enter an IP address, domain, file SHA-256 hash, or email to verify..."
+            placeholder="Enter IP address, domain, file SHA-256 hash, or email to verify..."
             value={scanInput}
             onChange={(e) => setScanInput(e.target.value)}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+            className="flex-1 px-4 py-2.5 rounded-xl bg-[#09041a] border border-purple-500/25 text-xs font-mono text-purple-100 placeholder-purple-300/40 focus:outline-none focus:border-purple-400"
           />
           <button
             type="submit"
-            className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-mono font-bold transition-all shadow-cyber-sm shrink-0"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-mono font-bold transition-all shadow-[0_0_15px_rgba(168,85,247,0.35)] shrink-0 touch-manipulation active:scale-95"
           >
             Verify Threat
           </button>
@@ -127,12 +127,12 @@ export default function IndicatorsView({ indicators = [], onSelectReportById }) 
             ) : (
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             )}
-            <div>
-              <p className="font-semibold">{scanResult.message}</p>
+            <div className="min-w-0 flex-1">
+              <p className="font-semibold break-words">{scanResult.message}</p>
               {scanResult.items && (
                 <div className="mt-2 space-y-1">
                   {scanResult.items.map(item => (
-                    <div key={item.id} className="text-[11px] text-slate-300">
+                    <div key={item.id} className="text-[11px] text-slate-300 break-all">
                       • [{item.type}] <span className="font-bold text-white">{item.value}</span> — Linked to: {item.reportTitle}
                     </div>
                   ))}
@@ -144,30 +144,30 @@ export default function IndicatorsView({ indicators = [], onSelectReportById }) 
       </div>
 
       {/* Filter & Search */}
-      <div className="cyber-card rounded-xl p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+      <div className="cyber-card rounded-2xl p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
         <div className="relative flex-1">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-purple-400/50 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search indicator value, report title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/60 font-mono"
+            className="w-full pl-9 pr-4 py-2 rounded-xl bg-[#09041a] border border-purple-500/25 text-xs text-purple-100 placeholder-purple-300/40 focus:outline-none focus:border-purple-400 font-mono"
           />
         </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-          <span className="text-[11px] font-mono text-slate-500 uppercase mr-1 flex items-center gap-1">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+          <span className="text-[11px] font-mono text-purple-300/60 uppercase mr-1 flex items-center gap-1 shrink-0">
             <Filter className="w-3 h-3" /> Type:
           </span>
           {types.map((tp) => (
             <button
               key={tp}
               onClick={() => setSelectedType(tp)}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all ${
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-all shrink-0 touch-manipulation ${
                 selectedType === tp
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-cyber-sm font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 bg-slate-900/80 border border-slate-800'
+                  ? 'bg-purple-600/30 text-purple-200 border border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.25)] font-semibold'
+                  : 'text-purple-300/60 hover:text-purple-200 bg-[#0e0725] border border-purple-500/20'
               }`}
             >
               {tp}
@@ -176,12 +176,61 @@ export default function IndicatorsView({ indicators = [], onSelectReportById }) 
         </div>
       </div>
 
-      {/* Indicators Grid */}
-      <div className="cyber-card rounded-2xl overflow-hidden border border-slate-800">
+      {/* 
+        RESPONSIVE VIEW:
+        1. Mobile Cards (< md)
+        2. Desktop Table (>= md)
+      */}
+
+      {/* 1. Mobile Cards (< md) */}
+      <div className="md:hidden space-y-3">
+        {filteredIndicators.length === 0 ? (
+          <div className="cyber-card rounded-2xl p-8 text-center text-purple-300/50 font-mono text-xs">
+            No indicators match the search criteria.
+          </div>
+        ) : (
+          filteredIndicators.map((ind) => (
+            <div key={ind.id} className="cyber-card rounded-2xl p-4 space-y-3">
+              <div className="flex items-center justify-between gap-2">
+                <StatusBadge status={ind.type} type="indicator" />
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono text-purple-300/50">Conf:</span>
+                  <span className="text-xs font-mono font-bold text-purple-300">{ind.confidence || '95%'}</span>
+                  <StatusBadge status={ind.status || 'MALICIOUS'} />
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-[#09041a] border border-purple-500/20 font-mono text-xs text-purple-100 break-all select-all">
+                {ind.value}
+              </div>
+
+              <div className="flex items-center justify-between pt-1 text-[11px] font-mono">
+                <span className="text-purple-300/60 truncate max-w-[200px]">
+                  {ind.reportTitle || `Threat Report #${ind.reportId}`}
+                </span>
+                <button
+                  onClick={() => handleCopy(ind.id, ind.value)}
+                  className="px-2.5 py-1.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/60 border border-purple-500/30 text-purple-200 inline-flex items-center gap-1.5 text-xs touch-manipulation active:scale-95"
+                >
+                  {copiedId === ind.id ? (
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5 text-purple-300" />
+                  )}
+                  <span>{copiedId === ind.id ? 'Copied' : 'Copy'}</span>
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* 2. Desktop Table (>= md) */}
+      <div className="hidden md:block cyber-card rounded-2xl overflow-hidden border border-purple-500/20">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-900/90 border-b border-slate-800 text-[11px] font-mono uppercase text-slate-400">
+              <tr className="bg-[#0e0725]/90 border-b border-purple-500/20 text-[11px] font-mono uppercase text-purple-300/60">
                 <th className="py-3 px-4">Type</th>
                 <th className="py-3 px-4">Indicator Value</th>
                 <th className="py-3 px-4">Confidence</th>
@@ -190,35 +239,35 @@ export default function IndicatorsView({ indicators = [], onSelectReportById }) 
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-xs">
+            <tbody className="divide-y divide-purple-500/15 text-xs">
               {filteredIndicators.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="text-center py-10 text-slate-500 font-mono">
+                  <td colSpan="6" className="text-center py-10 text-purple-300/50 font-mono">
                     No indicators match the search criteria.
                   </td>
                 </tr>
               ) : (
                 filteredIndicators.map((ind) => (
-                  <tr key={ind.id} className="hover:bg-slate-850/60 transition-colors">
+                  <tr key={ind.id} className="hover:bg-purple-950/30 transition-colors">
                     <td className="py-3.5 px-4">
                       <StatusBadge status={ind.type} type="indicator" />
                     </td>
-                    <td className="py-3.5 px-4 font-mono font-medium text-slate-100 max-w-sm truncate select-all">
+                    <td className="py-3.5 px-4 font-mono font-medium text-purple-100 max-w-sm truncate select-all">
                       {ind.value}
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-cyan-400 font-bold">
+                    <td className="py-3.5 px-4 font-mono text-purple-300 font-bold">
                       {ind.confidence || '95%'}
                     </td>
                     <td className="py-3.5 px-4">
                       <StatusBadge status={ind.status || 'MALICIOUS'} />
                     </td>
-                    <td className="py-3.5 px-4 text-slate-400 max-w-xs truncate">
+                    <td className="py-3.5 px-4 text-purple-300/70 max-w-xs truncate">
                       {ind.reportTitle || `Threat Report #${ind.reportId}`}
                     </td>
                     <td className="py-3.5 px-4 text-right">
                       <button
                         onClick={() => handleCopy(ind.id, ind.value)}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-800 transition-colors inline-flex items-center gap-1 text-[11px] font-mono"
+                        className="p-1.5 rounded-lg text-purple-300 hover:text-white hover:bg-purple-900/40 transition-colors inline-flex items-center gap-1 text-[11px] font-mono touch-manipulation"
                         title="Copy indicator value"
                       >
                         {copiedId === ind.id ? (
@@ -226,9 +275,7 @@ export default function IndicatorsView({ indicators = [], onSelectReportById }) 
                         ) : (
                           <Copy className="w-3.5 h-3.5" />
                         )}
-                        <span className="hidden sm:inline">
-                          {copiedId === ind.id ? 'Copied' : 'Copy'}
-                        </span>
+                        <span>{copiedId === ind.id ? 'Copied' : 'Copy'}</span>
                       </button>
                     </td>
                   </tr>

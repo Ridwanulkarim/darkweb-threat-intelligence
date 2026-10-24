@@ -8,7 +8,9 @@ import {
   ShieldCheck, 
   User, 
   CheckCircle,
-  HardDrive
+  HardDrive,
+  ArrowLeft,
+  ChevronRight
 } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
@@ -17,6 +19,12 @@ export default function InvestigationsView({ investigations = [], onNotify }) {
   const [selectedInv, setSelectedInv] = useState(investigations[0] || null);
   const [newEvidenceFile, setNewEvidenceFile] = useState('');
   const [newEvidenceHash, setNewEvidenceHash] = useState('');
+  const [mobileView, setMobileView] = useState('list'); // 'list' | 'detail'
+
+  const handleSelectCase = (inv) => {
+    setSelectedInv(inv);
+    setMobileView('detail');
+  };
 
   const handleAddEvidence = (e) => {
     e.preventDefault();
@@ -50,14 +58,14 @@ export default function InvestigationsView({ investigations = [], onNotify }) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold font-mono text-white flex items-center gap-2">
-          <SearchCheck className="w-5 h-5 text-cyan-400" />
-          DIGITAL FORENSICS & INVESTIGATION CASES
+        <h2 className="text-lg sm:text-xl font-bold font-mono text-white flex items-center gap-2">
+          <SearchCheck className="w-5 h-5 text-purple-400 shrink-0" />
+          <span className="truncate">DIGITAL FORENSICS & INVESTIGATION CASES</span>
         </h2>
-        <p className="text-xs text-slate-400 mt-0.5">
+        <p className="text-xs text-purple-200/60 mt-0.5">
           Chain-of-custody tracking, memory dumps, network PCAPs, and evidence artifacts.
         </p>
       </div>
@@ -65,72 +73,94 @@ export default function InvestigationsView({ investigations = [], onNotify }) {
       {/* Grid: Cases and Evidence Vault */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Cases List */}
-        <div className="space-y-3 lg:col-span-1">
+        <div className={`space-y-3 lg:col-span-1 ${mobileView === 'detail' ? 'hidden lg:block' : 'block'}`}>
+          <div className="flex items-center justify-between pb-1 px-1">
+            <span className="text-xs font-mono uppercase text-purple-300/60 font-semibold">
+              Open Forensic Cases ({invList.length})
+            </span>
+          </div>
+
           {invList.map((inv) => (
             <div
               key={inv.id}
-              onClick={() => setSelectedInv(inv)}
-              className={`p-4 rounded-xl border transition-all cursor-pointer ${
+              onClick={() => handleSelectCase(inv)}
+              className={`p-4 rounded-2xl border transition-all cursor-pointer touch-manipulation ${
                 selectedInv?.id === inv.id
-                  ? 'bg-slate-900 border-cyan-500/60 shadow-cyber-md'
-                  : 'cyber-card border-slate-800 hover:border-slate-700'
+                  ? 'bg-[#150a36] border-purple-500/50 shadow-[0_0_20px_rgba(168,85,247,0.25)]'
+                  : 'cyber-card border-purple-500/20 hover:border-purple-500/40'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-mono text-cyan-400 font-bold">{inv.id}</span>
+                <span className="text-xs font-mono text-purple-300 font-bold">{inv.id}</span>
                 <StatusBadge status={inv.status} />
               </div>
-              <h4 className="text-sm font-semibold font-mono text-white mb-2">
+              <h4 className="text-sm font-semibold font-mono text-white mb-2 line-clamp-2">
                 {inv.title}
               </h4>
-              <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-2 border-t border-slate-800/80">
-                <span>Analyst: {inv.analyst}</span>
-                <span className="text-cyan-400 font-semibold">{inv.evidenceList?.length || 0} Artifacts</span>
+              <div className="flex items-center justify-between text-xs font-mono text-purple-300/60 pt-2 border-t border-purple-500/15">
+                <span className="truncate max-w-[130px]">Analyst: {inv.analyst}</span>
+                <div className="flex items-center gap-1 text-purple-300 font-semibold">
+                  <span>{inv.evidenceList?.length || 0} Artifacts</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Evidence Locker Panel */}
-        <div className="lg:col-span-2 cyber-card rounded-2xl p-6 border border-slate-800 space-y-6">
+        <div className={`lg:col-span-2 cyber-card rounded-2xl p-4 sm:p-6 border border-purple-500/25 space-y-6 ${
+          mobileView === 'list' ? 'hidden lg:block' : 'block'
+        }`}>
+          {/* Mobile Back Button */}
+          <div className="lg:hidden pb-3 border-b border-purple-500/20">
+            <button
+              onClick={() => setMobileView('list')}
+              className="flex items-center gap-1.5 text-xs font-mono text-purple-300 hover:text-white px-3 py-1.5 rounded-xl bg-purple-950/40 border border-purple-500/25 touch-manipulation"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to Cases List</span>
+            </button>
+          </div>
+
           {selectedInv ? (
             <>
               {/* Header Info */}
-              <div className="border-b border-slate-800 pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-mono text-slate-500">CASE FILE #{selectedInv.id}</span>
+              <div className="border-b border-purple-500/20 pb-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                  <span className="text-xs font-mono text-purple-400/60">CASE FILE #{selectedInv.id}</span>
                   <StatusBadge status={selectedInv.status} />
                 </div>
-                <h3 className="text-lg font-bold font-mono text-white">
+                <h3 className="text-base sm:text-lg font-bold font-mono text-white">
                   {selectedInv.title}
                 </h3>
-                <p className="text-xs text-slate-400 font-mono mt-1">
-                  Lead Forensic Investigator: <span className="text-slate-200">{selectedInv.analyst}</span> • Opened: {new Date(selectedInv.createdAt).toLocaleDateString()}
+                <p className="text-xs text-purple-200/70 font-mono mt-1">
+                  Lead Forensic Investigator: <span className="text-white font-semibold">{selectedInv.analyst}</span> • Opened: {new Date(selectedInv.createdAt).toLocaleDateString()}
                 </p>
               </div>
 
               {/* Evidence Artifacts Table */}
               <div>
-                <h4 className="text-xs font-mono uppercase text-slate-400 font-bold mb-3 flex items-center gap-2">
-                  <HardDrive className="w-4 h-4 text-cyan-400" />
+                <h4 className="text-xs font-mono uppercase text-purple-300 font-bold mb-3 flex items-center gap-2">
+                  <HardDrive className="w-4 h-4 text-purple-400" />
                   Forensic Artifacts Vault ({selectedInv.evidenceList?.length || 0})
                 </h4>
-                <div className="space-y-2">
+                <div className="space-y-2 max-h-64 overflow-y-auto">
                   {selectedInv.evidenceList?.map((ev) => (
                     <div
                       key={ev.id}
-                      className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono"
+                      className="p-3 rounded-xl bg-[#0a041c] border border-purple-500/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 text-xs font-mono"
                     >
-                      <div className="flex items-center gap-2.5">
-                        <FileText className="w-4 h-4 text-cyan-400 shrink-0" />
-                        <div>
-                          <p className="font-semibold text-white">{ev.fileName}</p>
-                          <p className="text-[11px] text-slate-500 font-mono">
-                            SHA256: <span className="text-slate-400 select-all">{ev.sha256}</span>
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <FileText className="w-4 h-4 text-purple-400 shrink-0" />
+                        <div className="min-w-0">
+                          <p className="font-semibold text-white truncate">{ev.fileName}</p>
+                          <p className="text-[11px] text-purple-400/50 font-mono break-all">
+                            SHA256: <span className="text-purple-200/70 select-all">{ev.sha256}</span>
                           </p>
                         </div>
                       </div>
-                      <span className="text-[10px] text-slate-500 shrink-0">
+                      <span className="text-[10px] text-purple-400/50 shrink-0">
                         {new Date(ev.uploadedAt).toLocaleTimeString()}
                       </span>
                     </div>
@@ -138,41 +168,48 @@ export default function InvestigationsView({ investigations = [], onNotify }) {
                 </div>
               </div>
 
-              {/* Add New Evidence Form */}
-              <div className="pt-4 border-t border-slate-800">
-                <h4 className="text-xs font-mono uppercase text-cyan-400 font-bold mb-3 flex items-center gap-2">
-                  <Plus className="w-4 h-4" />
-                  Catalog New Forensic Artifact
+              {/* Ingest New Evidence Form */}
+              <div className="p-4 rounded-xl bg-[#0a041c] border border-purple-500/20">
+                <h4 className="text-xs font-mono uppercase text-purple-300 font-bold mb-3 flex items-center gap-2">
+                  <Plus className="w-3.5 h-3.5 text-purple-400" />
+                  Attach New Digital Forensic Evidence
                 </h4>
-                <form onSubmit={handleAddEvidence} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    placeholder="Evidence filename (e.g. dump.raw, traffic.pcap)..."
-                    value={newEvidenceFile}
-                    onChange={(e) => setNewEvidenceFile(e.target.value)}
-                    className="px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
-                  />
-                  <input
-                    type="text"
-                    placeholder="SHA-256 Hash Checksum..."
-                    value={newEvidenceHash}
-                    onChange={(e) => setNewEvidenceHash(e.target.value)}
-                    className="px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
-                  />
-                  <div className="sm:col-span-2 flex justify-end">
-                    <button
-                      type="submit"
-                      className="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-mono font-bold transition-all shadow-cyber-sm"
-                    >
-                      Add to Vault
-                    </button>
+                <form onSubmit={handleAddEvidence} className="space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] text-purple-300/60 font-mono mb-1">Evidence Artifact Filename *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. memory_dump_win11.raw or traffic.pcap"
+                        value={newEvidenceFile}
+                        onChange={(e) => setNewEvidenceFile(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl bg-[#0e0725] border border-purple-500/25 text-xs font-mono text-purple-100 placeholder-purple-300/40 focus:outline-none focus:border-purple-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-purple-300/60 font-mono mb-1">Cryptographic SHA-256 Hash</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
+                        value={newEvidenceHash}
+                        onChange={(e) => setNewEvidenceHash(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl bg-[#0e0725] border border-purple-500/25 text-xs font-mono text-purple-100 placeholder-purple-300/40 focus:outline-none focus:border-purple-400"
+                      />
+                    </div>
                   </div>
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-mono font-bold shadow-[0_0_12px_rgba(168,85,247,0.3)] transition-all touch-manipulation active:scale-95"
+                  >
+                    Catalog Into Evidence Vault
+                  </button>
                 </form>
               </div>
             </>
           ) : (
-            <div className="text-slate-500 font-mono text-xs text-center py-12">
-              Select an investigation case to view evidence.
+            <div className="text-center py-12 text-purple-300/50 font-mono text-xs">
+              Select an investigation case to view evidence artifacts.
             </div>
           )}
         </div>
