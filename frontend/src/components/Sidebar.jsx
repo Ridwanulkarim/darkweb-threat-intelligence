@@ -84,20 +84,20 @@ export default function Sidebar({ activeTab, setActiveTab, counts = {}, collapse
 
   return (
     <aside
-      className={`relative z-30 flex flex-col border-r border-slate-800/80 bg-[#070b14]/95 transition-all duration-300 ease-in-out select-none ${
+      className={`relative z-30 flex flex-col border-r border-purple-500/20 bg-[#09041a]/85 backdrop-blur-xl transition-all duration-300 ease-in-out select-none ${
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
       {/* Sidebar Header toggle */}
-      <div className="flex items-center justify-between px-3 py-3 border-b border-slate-800/60">
+      <div className="flex items-center justify-between px-3 py-3 border-b border-purple-500/20">
         {!collapsed && (
-          <span className="text-[11px] font-mono uppercase text-slate-500 font-semibold tracking-wider">
+          <span className="text-[11px] font-mono uppercase text-purple-300/60 font-semibold tracking-wider">
             Security Modules
           </span>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-1 rounded-md text-slate-400 hover:text-cyan-300 hover:bg-slate-800/80 transition-colors mx-auto"
+          className="p-1 rounded-md text-purple-300/70 hover:text-purple-200 hover:bg-purple-900/40 transition-colors mx-auto"
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -116,14 +116,14 @@ export default function Sidebar({ activeTab, setActiveTab, counts = {}, collapse
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all group ${
                 isActive
-                  ? 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 shadow-cyber-sm font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-850 border border-transparent'
+                  ? 'bg-purple-600/25 text-purple-100 border border-purple-500/50 shadow-[0_0_16px_rgba(168,85,247,0.3)] font-semibold'
+                  : 'text-slate-400 hover:text-purple-200 hover:bg-purple-950/30 border border-transparent'
               }`}
               title={collapsed ? `${item.label} - ${item.desc}` : undefined}
             >
               <Icon
                 className={`w-4 h-4 shrink-0 transition-transform ${
-                  isActive ? 'text-cyan-400 scale-110' : 'text-slate-400 group-hover:text-cyan-300'
+                  isActive ? 'text-purple-300 scale-110 drop-shadow-[0_0_8px_rgba(192,132,252,0.8)]' : 'text-slate-400 group-hover:text-purple-300'
                 }`}
               />
               {!collapsed && (
@@ -132,7 +132,7 @@ export default function Sidebar({ activeTab, setActiveTab, counts = {}, collapse
                   {item.badge !== null && item.badge !== undefined && (
                     <span
                       className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${
-                        item.badgeColor || 'bg-slate-900 text-slate-400 border-slate-800'
+                        item.badgeColor || (isActive ? 'bg-purple-900/60 text-purple-200 border-purple-600/60' : 'bg-[#120a2e] text-purple-300/80 border-purple-500/20')
                       }`}
                     >
                       {item.badge}
@@ -147,12 +147,12 @@ export default function Sidebar({ activeTab, setActiveTab, counts = {}, collapse
 
       {/* Sidebar Footer */}
       {!collapsed && (
-        <div className="p-3 m-2 rounded-xl bg-slate-900/60 border border-slate-800/80 text-[11px] font-mono text-slate-400">
-          <div className="flex items-center gap-1.5 text-cyan-400 font-semibold mb-1">
+        <div className="p-3 m-2 rounded-xl bg-[#120a2e]/60 border border-purple-500/20 text-[11px] font-mono text-purple-200/80">
+          <div className="flex items-center gap-1.5 text-amber-400 font-semibold mb-1">
             <Flame className="w-3.5 h-3.5 animate-pulse text-amber-400" />
             <span>THREAT LEVEL: HIGH</span>
           </div>
-          <p className="text-[10px] text-slate-500 leading-tight">
+          <p className="text-[10px] text-purple-300/50 leading-tight">
             Elevated Darknet Market activity observed in the past 24 hours.
           </p>
         </div>

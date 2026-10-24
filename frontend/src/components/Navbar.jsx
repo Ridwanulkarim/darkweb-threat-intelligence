@@ -53,36 +53,36 @@ export default function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#070b14]/90 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-6 py-2.5">
+    <header className="sticky top-0 z-40 bg-[#0a051d]/75 backdrop-blur-xl border-b border-purple-500/20 px-4 sm:px-6 py-2.5">
       <div className="flex items-center justify-between gap-4">
         {/* Left: Branding & Status */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-cyber-sm">
-              <ShieldAlert className="w-5 h-5 animate-pulse" />
+            <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/40 flex items-center justify-center text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+              <ShieldAlert className="w-5 h-5 animate-pulse text-purple-400" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-bold tracking-tight text-white text-base">
-                  DARK<span className="text-cyan-400">WEB</span>
+                  DARK<span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-300 to-indigo-300">WEB</span>
                 </span>
-                <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-cyan-950/70 text-cyan-300 border border-cyan-800/50">
+                <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800/60 shadow-[0_0_10px_rgba(147,51,234,0.2)]">
                   CTI Platform
                 </span>
               </div>
-              <p className="text-[10px] font-mono text-slate-500 hidden sm:block">
+              <p className="text-[10px] font-mono text-purple-300/60 hidden sm:block">
                 DEFENSE TELEMETRY & INCIDENT OPS
               </p>
             </div>
           </div>
 
           {/* Real-time Ticker */}
-          <div className="hidden xl:flex items-center gap-2 ml-6 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-xs">
+          <div className="hidden xl:flex items-center gap-2 ml-6 px-3 py-1 rounded-full bg-[#120a2e]/80 border border-purple-500/25 text-xs shadow-inner">
             <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
             </span>
-            <span className="text-slate-400 font-mono text-[11px]">LIVE INTEL:</span>
+            <span className="text-purple-300/70 font-mono text-[11px]">LIVE INTEL:</span>
             <span className="text-slate-200 truncate max-w-md text-xs font-mono">
               Tor Hidden Service Dread: New breach paste reported across European logistics nodes
             </span>
@@ -94,36 +94,36 @@ export default function Navbar({
           {/* Quick Action: New Threat */}
           <button
             onClick={onOpenNewReportModal}
-            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 text-xs font-semibold shadow-cyber-sm transition-all active:scale-95"
+            className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all active:scale-95 border border-purple-400/30"
           >
-            <ShieldAlert className="w-3.5 h-3.5" />
+            <ShieldAlert className="w-3.5 h-3.5 text-purple-200" />
             <span>New Intel Report</span>
           </button>
 
           {/* Simulation vs Live API Toggle */}
-          <div className="flex items-center bg-[#0d1322] border border-slate-800 rounded-lg p-0.5 text-xs font-mono">
+          <div className="flex items-center bg-[#100726]/80 border border-purple-500/25 rounded-lg p-0.5 text-xs font-mono">
             <button
               onClick={handleToggleMode}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md transition-all ${
                 simulationMode 
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-cyber-sm' 
+                  ? 'bg-purple-600/30 text-purple-200 border border-purple-500/50 shadow-[0_0_12px_rgba(168,85,247,0.25)]' 
                   : 'text-slate-400 hover:text-slate-200'
               }`}
               title="Runs with rich dark web simulated intelligence datasets"
             >
-              <Sparkles className="w-3 h-3 text-cyan-400" />
+              <Sparkles className="w-3 h-3 text-purple-400" />
               <span>Simulated CTI</span>
             </button>
             <button
               onClick={handleToggleMode}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md transition-all ${
                 !simulationMode 
-                  ? 'bg-blue-600/30 text-blue-300 border border-blue-500/40 shadow-cyber-sm' 
+                  ? 'bg-indigo-600/30 text-indigo-200 border border-indigo-500/50 shadow-[0_0_12px_rgba(99,102,241,0.25)]' 
                   : 'text-slate-400 hover:text-slate-200'
               }`}
               title="Connects directly to Express backend on localhost:3000/api"
             >
-              <Server className="w-3 h-3 text-blue-400" />
+              <Server className="w-3 h-3 text-indigo-400" />
               <span>Live API</span>
             </button>
           </div>
@@ -149,23 +149,23 @@ export default function Navbar({
             <div className="relative">
               <button
                 onClick={() => setUserDropdown(!userDropdown)}
-                className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs font-mono text-slate-200"
+                className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-[#120a2e]/80 border border-purple-500/30 hover:border-purple-500/60 text-xs font-mono text-purple-200 transition-colors"
               >
-                <div className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-[10px]">
+                <div className="w-5 h-5 rounded-full bg-purple-500/25 text-purple-200 flex items-center justify-center font-bold text-[10px] border border-purple-400/40">
                   {currentUser.name ? currentUser.name[0] : 'U'}
                 </div>
                 <span className="hidden md:inline max-w-[120px] truncate">{currentUser.name}</span>
-                <span className="text-[10px] text-cyan-400 bg-cyan-950/60 px-1 py-0.2 rounded border border-cyan-800/40">
+                <span className="text-[10px] text-purple-300 bg-purple-950/80 px-1 py-0.2 rounded border border-purple-700/50">
                   {currentUser.role || 'ANALYST'}
                 </span>
-                <ChevronDown className="w-3 h-3 text-slate-500" />
+                <ChevronDown className="w-3 h-3 text-purple-400/60" />
               </button>
 
               {userDropdown && (
-                <div className="absolute right-0 mt-2 w-48 rounded-xl bg-[#0d1322] border border-slate-800 shadow-2xl p-1.5 z-50 text-xs font-mono">
-                  <div className="px-3 py-2 border-b border-slate-800/80 mb-1">
+                <div className="absolute right-0 mt-2 w-48 rounded-xl bg-[#0e0724] border border-purple-500/30 shadow-2xl p-1.5 z-50 text-xs font-mono backdrop-blur-xl">
+                  <div className="px-3 py-2 border-b border-purple-500/20 mb-1">
                     <p className="font-semibold text-white truncate">{currentUser.name}</p>
-                    <p className="text-[11px] text-slate-400 truncate">{currentUser.email}</p>
+                    <p className="text-[11px] text-purple-300/60 truncate">{currentUser.email}</p>
                   </div>
                   <button
                     onClick={handleLogout}
@@ -180,9 +180,9 @@ export default function Navbar({
           ) : (
             <button
               onClick={onOpenAuthModal}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-850 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-cyan-300 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#120a2e]/80 hover:bg-[#1a0f3d] border border-purple-500/30 text-xs font-mono text-purple-200 transition-colors"
             >
-              <LogIn className="w-3.5 h-3.5" />
+              <LogIn className="w-3.5 h-3.5 text-purple-400" />
               <span>SOC Login</span>
             </button>
           )}

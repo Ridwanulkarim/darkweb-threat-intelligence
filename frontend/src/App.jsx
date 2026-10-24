@@ -207,7 +207,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#070b14] text-slate-100 cyber-grid-bg">
+    <div className="min-h-screen flex flex-col bg-[#060214] text-slate-100 cyber-canvas-bg relative overflow-x-hidden selection:bg-purple-500/30 selection:text-purple-200">
+      {/* 3D Perspective Grid Background (Cybersecurity Landing UI effect) */}
+      <div className="cyber-perspective-grid" aria-hidden="true" />
+      
+      {/* Ambient glowing radial spotlights */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[750px] h-[360px] bg-purple-600/20 rounded-full blur-[130px] pointer-events-none -z-0" />
+      <div className="absolute top-1/3 -right-20 w-[450px] h-[450px] bg-indigo-600/10 rounded-full blur-[150px] pointer-events-none -z-0" />
+
       {/* Top Navbar */}
       <Navbar
         simulationMode={simulationMode}
@@ -219,7 +226,7 @@ export default function App() {
       />
 
       {/* Main Workspace Layout */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative z-10">
         {/* Tactical Sidebar */}
         <Sidebar
           activeTab={activeTab}
@@ -240,8 +247,8 @@ export default function App() {
         {/* Dynamic View Area */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
           {loading ? (
-            <div className="flex flex-col items-center justify-center h-96 space-y-3 font-mono text-cyan-400">
-              <div className="w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+            <div className="flex flex-col items-center justify-center h-96 space-y-3 font-mono text-purple-300">
+              <div className="w-8 h-8 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
               <p className="text-xs uppercase tracking-widest animate-pulse">
                 Synchronizing Dark Web Feeds...
               </p>
@@ -532,7 +539,7 @@ export default function App() {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-cyber-sm transition-all"
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold shadow-[0_0_15px_rgba(168,85,247,0.35)] transition-all"
               >
                 Ingest to Database
               </button>
@@ -551,13 +558,13 @@ export default function App() {
         >
           <div className="space-y-4 font-mono text-xs">
             {/* Type selector */}
-            <div className="flex rounded-lg bg-slate-900 p-1 border border-slate-800">
+            <div className="flex rounded-lg bg-slate-900 p-1 border border-purple-500/30">
               <button
                 type="button"
                 onClick={() => setAuthForm({ ...authForm, type: 'analyst' })}
                 className={`flex-1 py-1.5 rounded-md font-bold transition-all ${
                   authForm.type === 'analyst' 
-                    ? 'bg-cyan-500 text-slate-950 shadow-cyber-sm' 
+                    ? 'bg-purple-600 text-white shadow-[0_0_15px_rgba(168,85,247,0.35)]' 
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -568,7 +575,7 @@ export default function App() {
                 onClick={() => setAuthForm({ ...authForm, type: 'admin' })}
                 className={`flex-1 py-1.5 rounded-md font-bold transition-all ${
                   authForm.type === 'admin' 
-                    ? 'bg-cyan-500 text-slate-950 shadow-cyber-sm' 
+                    ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.35)]' 
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -577,20 +584,20 @@ export default function App() {
             </div>
 
             {/* Quick-fill helpers */}
-            <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] space-y-1.5">
-              <span className="text-slate-500 uppercase block font-semibold">Quick-Fill Demo Credentials:</span>
+            <div className="p-2.5 rounded-xl bg-slate-900 border border-purple-500/20 text-[11px] space-y-1.5">
+              <span className="text-purple-300/60 uppercase block font-semibold">Quick-Fill Demo Credentials:</span>
               <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => setAuthForm({ type: 'analyst', email: 'elena.rostova@cyberthreat.io', password: 'password123' })}
-                  className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-750 text-cyan-300 border border-slate-700"
+                  className="px-2 py-1 rounded bg-purple-950/50 hover:bg-purple-900/60 text-purple-200 border border-purple-500/30"
                 >
                   Elena Rostova (Analyst)
                 </button>
                 <button
                   type="button"
                   onClick={() => setAuthForm({ type: 'admin', email: 'admin@cyberthreat.io', password: 'password123' })}
-                  className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-750 text-rose-300 border border-slate-700"
+                  className="px-2 py-1 rounded bg-indigo-950/50 hover:bg-indigo-900/60 text-indigo-200 border border-indigo-500/30"
                 >
                   Root Admin
                 </button>
@@ -606,7 +613,7 @@ export default function App() {
                   placeholder="analyst@domain.com"
                   value={authForm.email}
                   onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400"
+                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-purple-500/30 text-slate-100 focus:outline-none focus:border-purple-400"
                 />
               </div>
               <div>
@@ -617,7 +624,7 @@ export default function App() {
                   placeholder="••••••••"
                   value={authForm.password}
                   onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400"
+                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-purple-500/30 text-slate-100 focus:outline-none focus:border-purple-400"
                 />
               </div>
 
@@ -631,7 +638,7 @@ export default function App() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-cyber-sm"
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold shadow-[0_0_15px_rgba(168,85,247,0.35)]"
                 >
                   Sign In to SOC
                 </button>
