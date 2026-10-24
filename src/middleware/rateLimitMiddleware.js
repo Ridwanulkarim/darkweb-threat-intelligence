@@ -16,8 +16,8 @@ const authRateLimiter = (options = {}) => {
   const maxAttempts = options.maxAttempts || 10; // 10 attempts per window
 
   return (req, res, next) => {
-    // Determine client IP
-    const clientIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || 'unknown';
+    // Determine client IP using Express req.ip (resolves securely via trust proxy)
+    const clientIp = req.ip || req.socket?.remoteAddress || 'unknown';
     const now = Date.now();
 
     let record = loginAttempts.get(clientIp);

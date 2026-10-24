@@ -119,12 +119,16 @@ const authService = {
         throw error;
       }
 
-      // STRICT PRIVILEGE SEPARATION: Under no circumstances can client self-assign 'ADMIN'
-      // Allowed analyst roles are strictly 'ANALYST' or 'RESEARCHER'
+      // Strict role validation: Prisma Role enum contains ADMIN, ANALYST, MANAGER
+      // Dedicated admin registration handles ADMIN. Here, allowed roles are strictly ANALYST and MANAGER.
       let assignedRole = 'ANALYST';
-      if (data.role && data.role.toUpperCase() === 'RESEARCHER') {
-        assignedRole = 'RESEARCHER';
+      if (data.role && data.role.toUpperCase() === 'MANAGER') {
+        assignedRole = 'MANAGER';
       }
+
+      // Valid status handling
+      const allowedStatuses = ['ACTIVE', 'INACTIVE', 'SUSPENDED', 'BANNED'];
+      const assignedStatus = (data.status && allowedStatuses.includes(data.status)) ? data.status : 'ACTIVE';
 
       const hashedPassword = hashPassword(password);
       const analyst = await prisma.analyst.create({
@@ -133,7 +137,7 @@ const authService = {
           email,
           password: hashedPassword,
           role: assignedRole,
-          status: 'ACTIVE'
+          status: assignedStatus,
         },
         select: {
           id: true,

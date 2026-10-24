@@ -30,6 +30,9 @@ if (process.env.DATABASE_URL) {
 
 const app = express();
 
+// Trust reverse proxy (Render terminates TLS at 1 hop reverse proxy)
+app.set('trust proxy', 1);
+
 // Secure CORS configuration
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
   ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim()) 

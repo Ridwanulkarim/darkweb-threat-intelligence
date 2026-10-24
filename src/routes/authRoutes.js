@@ -32,7 +32,8 @@ const limiter = authRateLimiter({ windowMs: 15 * 60 * 1000, maxAttempts: 10 });
 
 router.post('/admin/register', limiter, bootstrapAdminGuard, authController.registerAdmin);
 router.post('/admin/login', limiter, authController.adminLogin);
-router.post('/analyst/register', limiter, authController.registerAnalyst);
+// Analyst registration: restricted to Administrators only (invite-only/admin-managed)
+router.post('/analyst/register', limiter, authMiddleware, adminMiddleware, authController.registerAnalyst);
 router.post('/analyst/login', limiter, authController.analystLogin);
 
 module.exports = router;
