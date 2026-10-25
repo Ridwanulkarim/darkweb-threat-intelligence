@@ -75,18 +75,18 @@ export default function ThreatReportsView({
         </div>
 
         {/* Status Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
-          <span className="text-[11px] font-mono text-purple-300/60 uppercase mr-1 flex items-center gap-1 shrink-0">
-            <Filter className="w-3 h-3" /> Status:
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+          <span className="text-xs sm:text-sm font-mono text-purple-300/70 uppercase mr-1 flex items-center gap-1.5 shrink-0 font-semibold">
+            <Filter className="w-3.5 h-3.5" /> Status:
           </span>
           {statuses.map((st) => (
             <button
               key={st}
               onClick={() => setSelectedStatus(st)}
-              className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-all shrink-0 touch-manipulation ${
+              className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-mono transition-all shrink-0 touch-manipulation ${
                 selectedStatus === st
                   ? 'bg-purple-600/30 text-purple-200 border border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.25)] font-semibold'
-                  : 'text-purple-300/60 hover:text-purple-200 bg-[#0e0725] border border-purple-500/20'
+                  : 'text-purple-300/70 hover:text-purple-200 bg-[#0e0725] border border-purple-500/20'
               }`}
             >
               {st}
@@ -102,9 +102,9 @@ export default function ThreatReportsView({
       */}
 
       {/* 1. Mobile Cards (< md) */}
-      <div className="md:hidden space-y-3">
+      <div className="md:hidden space-y-3.5">
         {filteredReports.length === 0 ? (
-          <div className="cyber-card rounded-2xl p-8 text-center text-purple-300/50 font-mono text-xs">
+          <div className="cyber-card rounded-2xl p-8 text-center text-purple-300/60 font-mono text-sm">
             No threat reports match the filter criteria.
           </div>
         ) : (
@@ -112,33 +112,33 @@ export default function ThreatReportsView({
             <div
               key={rep.id}
               onClick={() => onSelectReport(rep)}
-              className="cyber-card rounded-2xl p-4 space-y-3 cursor-pointer group active:scale-[0.99] transition-all touch-manipulation"
+              className="cyber-card rounded-2xl p-4.5 space-y-3 cursor-pointer group active:scale-[0.99] transition-all touch-manipulation"
             >
               <div className="flex items-start justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-1.5">
+                <div className="flex flex-wrap items-center gap-2">
                   <StatusBadge status={rep.status} />
-                  <span className="px-2 py-0.5 rounded bg-purple-950/70 text-purple-300 border border-purple-800/60 text-[10px] font-mono">
+                  <span className="px-2.5 py-0.5 rounded-md bg-purple-950/70 text-purple-300 border border-purple-800/60 text-xs font-mono font-semibold">
                     {rep.category?.name || 'General'}
                   </span>
                 </div>
-                <span className="text-[10px] text-purple-300/50 font-mono shrink-0">
+                <span className="text-xs text-purple-300/60 font-mono shrink-0">
                   {new Date(rep.createdAt).toLocaleDateString()}
                 </span>
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-white group-hover:text-purple-300 transition-colors font-mono">
+                <h3 className="text-base font-semibold text-white group-hover:text-purple-300 transition-colors font-mono">
                   {rep.title}
                 </h3>
                 {rep.description && (
-                  <p className="text-xs text-purple-200/60 mt-1 line-clamp-2">
+                  <p className="text-sm text-purple-200/70 mt-1.5 line-clamp-2">
                     {rep.description}
                   </p>
                 )}
               </div>
 
-              <div className="pt-2 border-t border-purple-500/15 flex items-center justify-between text-[11px] font-mono text-purple-300/70">
-                <span className="truncate max-w-[140px] text-purple-200/90">
+              <div className="pt-2.5 border-t border-purple-500/15 flex items-center justify-between text-xs sm:text-sm font-mono text-purple-300/80">
+                <span className="truncate max-w-[150px] text-purple-200/90 font-medium">
                   {rep.source?.name || 'Darknet Forum'}
                 </span>
                 <div className="flex items-center gap-2 shrink-0">
@@ -156,21 +156,21 @@ export default function ThreatReportsView({
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#0e0725]/90 border-b border-purple-500/20 text-[11px] font-mono uppercase text-purple-300/60">
-                <th className="py-3 px-4">Threat Report</th>
-                <th className="py-3 px-4">Category</th>
-                <th className="py-3 px-4">Intel Source</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4">Indicators</th>
-                <th className="py-3 px-4">Lead Analyst</th>
-                <th className="py-3 px-4">Logged Date</th>
-                <th className="py-3 px-4 text-right">Action</th>
+              <tr className="bg-[#0e0725]/90 border-b border-purple-500/20 text-xs sm:text-sm font-mono uppercase text-purple-300/70 font-semibold">
+                <th className="py-3.5 px-4">Threat Report</th>
+                <th className="py-3.5 px-4">Category</th>
+                <th className="py-3.5 px-4">Intel Source</th>
+                <th className="py-3.5 px-4">Status</th>
+                <th className="py-3.5 px-4">Indicators</th>
+                <th className="py-3.5 px-4">Lead Analyst</th>
+                <th className="py-3.5 px-4">Logged Date</th>
+                <th className="py-3.5 px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-purple-500/15 text-xs">
+            <tbody className="divide-y divide-purple-500/15 text-sm">
               {filteredReports.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="text-center py-10 text-purple-300/50 font-mono">
+                  <td colSpan="8" className="text-center py-10 text-purple-300/60 font-mono text-sm">
                     No threat reports match the filter criteria.
                   </td>
                 </tr>
@@ -181,35 +181,35 @@ export default function ThreatReportsView({
                     onClick={() => onSelectReport(rep)}
                     className="hover:bg-purple-950/30 transition-colors cursor-pointer group"
                   >
-                    <td className="py-3.5 px-4 font-medium text-slate-200 group-hover:text-purple-300 max-w-xs truncate">
+                    <td className="py-4 px-4 font-medium text-slate-200 group-hover:text-purple-300 max-w-xs truncate">
                       <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0"></span>
-                        <span className="font-semibold text-white truncate">{rep.title}</span>
+                        <span className="w-2 h-2 rounded-full bg-purple-400 shrink-0"></span>
+                        <span className="font-semibold text-white truncate text-sm sm:text-base">{rep.title}</span>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4 font-mono">
-                      <span className="px-2 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800/60 text-[11px]">
+                    <td className="py-4 px-4 font-mono">
+                      <span className="px-2.5 py-0.5 rounded-md bg-purple-950/80 text-purple-300 border border-purple-800/60 text-xs font-semibold">
                         {rep.category?.name || 'General'}
                       </span>
                     </td>
-                    <td className="py-3.5 px-4 text-purple-300/70 font-mono text-[11px]">
+                    <td className="py-4 px-4 text-purple-300/80 font-mono text-xs sm:text-sm">
                       {rep.source?.name || 'Darknet Forum'}
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-4 px-4">
                       <StatusBadge status={rep.status} />
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-purple-300 font-semibold">
+                    <td className="py-4 px-4 font-mono text-purple-300 font-semibold text-xs sm:text-sm">
                       {rep.indicators?.length || 0} IOCs
                     </td>
-                    <td className="py-3.5 px-4 text-purple-200/70">
+                    <td className="py-4 px-4 text-purple-200/80 text-sm">
                       {rep.analyst?.name || 'SOC Analyst'}
                     </td>
-                    <td className="py-3.5 px-4 text-purple-400/50 font-mono text-[11px]">
+                    <td className="py-4 px-4 text-purple-400/60 font-mono text-xs sm:text-sm">
                       {new Date(rep.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="py-3.5 px-4 text-right">
-                      <button className="p-1 rounded text-purple-400/70 group-hover:text-purple-200 hover:bg-purple-900/40 transition-colors">
-                        <ChevronRight className="w-4 h-4" />
+                    <td className="py-4 px-4 text-right">
+                      <button className="p-1.5 rounded text-purple-400/70 group-hover:text-purple-200 hover:bg-purple-900/40 transition-colors">
+                        <ChevronRight className="w-4.5 h-4.5" />
                       </button>
                     </td>
                   </tr>

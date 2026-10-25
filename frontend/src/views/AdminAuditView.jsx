@@ -45,20 +45,20 @@ export default function AdminAuditView({ auditLogs = [], accessLogs = [] }) {
       {activeSubTab === 'audit' ? (
         <>
           {/* Mobile Cards (< md) */}
-          <div className="md:hidden space-y-3">
+          <div className="md:hidden space-y-3.5">
             {auditLogs.map((log) => (
-              <div key={log.id} className="cyber-card rounded-2xl p-4 space-y-2">
-                <div className="flex items-center justify-between text-[11px] font-mono">
+              <div key={log.id} className="cyber-card rounded-2xl p-4.5 space-y-2.5">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-mono">
                   <span className="text-purple-400 font-bold">{log.id}</span>
-                  <span className="text-purple-300/50">{new Date(log.createdAt).toLocaleTimeString()}</span>
+                  <span className="text-purple-300/60">{new Date(log.createdAt).toLocaleTimeString()}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-white font-mono">{log.admin}</span>
-                  <span className="px-2 py-0.5 rounded bg-purple-950/70 text-purple-300 border border-purple-800/60 font-mono text-[10px]">
+                  <span className="text-base font-semibold text-white font-mono">{log.admin}</span>
+                  <span className="px-2.5 py-0.5 rounded-md bg-purple-950/70 text-purple-300 border border-purple-800/60 font-mono text-xs font-semibold">
                     {log.action}
                   </span>
                 </div>
-                <p className="text-xs font-mono text-purple-200/70 break-all bg-[#0a041c] p-2 rounded-xl border border-purple-500/15">
+                <p className="text-sm font-mono text-purple-200/80 break-all bg-[#0a041c] p-2.5 rounded-xl border border-purple-500/15">
                   Target: {log.target}
                 </p>
               </div>
@@ -70,26 +70,26 @@ export default function AdminAuditView({ auditLogs = [], accessLogs = [] }) {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-[#0e0725]/90 border-b border-purple-500/20 text-[11px] font-mono uppercase text-purple-300/60">
-                    <th className="py-3 px-4">Event ID</th>
-                    <th className="py-3 px-4">Operator / Admin</th>
-                    <th className="py-3 px-4">Action Performed</th>
-                    <th className="py-3 px-4">Target Resource</th>
-                    <th className="py-3 px-4 text-right">Timestamp</th>
+                  <tr className="bg-[#0e0725]/90 border-b border-purple-500/20 text-xs sm:text-sm font-mono uppercase text-purple-300/70 font-semibold">
+                    <th className="py-3.5 px-4">Event ID</th>
+                    <th className="py-3.5 px-4">Operator / Admin</th>
+                    <th className="py-3.5 px-4">Action Performed</th>
+                    <th className="py-3.5 px-4">Target Resource</th>
+                    <th className="py-3.5 px-4 text-right">Timestamp</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-purple-500/15 text-xs font-mono">
+                <tbody className="divide-y divide-purple-500/15 text-sm font-mono">
                   {auditLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-purple-950/30 transition-colors">
-                      <td className="py-3.5 px-4 text-purple-400/60 font-bold">{log.id}</td>
-                      <td className="py-3.5 px-4 text-purple-100 font-semibold">{log.admin}</td>
-                      <td className="py-3.5 px-4">
-                        <span className="px-2 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800/60 font-medium">
+                      <td className="py-4 px-4 text-purple-400/70 font-bold">{log.id}</td>
+                      <td className="py-4 px-4 text-purple-100 font-semibold">{log.admin}</td>
+                      <td className="py-4 px-4">
+                        <span className="px-2.5 py-0.5 rounded-md bg-purple-950/80 text-purple-300 border border-purple-800/60 font-semibold text-xs">
                           {log.action}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 text-purple-200/80 max-w-sm truncate">{log.target}</td>
-                      <td className="py-3.5 px-4 text-purple-300/50 text-right">
+                      <td className="py-4 px-4 text-purple-200/90 max-w-sm truncate">{log.target}</td>
+                      <td className="py-4 px-4 text-purple-300/60 text-right">
                         {new Date(log.createdAt).toLocaleString()}
                       </td>
                     </tr>
@@ -102,22 +102,22 @@ export default function AdminAuditView({ auditLogs = [], accessLogs = [] }) {
       ) : (
         <>
           {/* Mobile Cards (< md) */}
-          <div className="md:hidden space-y-3">
+          <div className="md:hidden space-y-3.5">
             {accessLogs.map((log) => (
-              <div key={log.id} className="cyber-card rounded-2xl p-4 space-y-2">
-                <div className="flex items-center justify-between text-[11px] font-mono">
+              <div key={log.id} className="cyber-card rounded-2xl p-4.5 space-y-2.5">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-mono">
                   <span className="text-purple-400 font-bold">{log.id}</span>
                   <StatusBadge status={log.status} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-white font-mono">{log.user}</span>
-                  <span className="px-2 py-0.5 rounded bg-[#0a041c] text-purple-300 border border-purple-500/20 text-[10px] font-mono">
+                  <span className="text-base font-semibold text-white font-mono">{log.user}</span>
+                  <span className="px-2.5 py-0.5 rounded-md bg-[#0a041c] text-purple-300 border border-purple-500/20 text-xs font-mono font-medium">
                     {log.role}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-xs font-mono text-purple-200/70 pt-1 border-t border-purple-500/15">
+                <div className="flex items-center justify-between text-sm font-mono text-purple-200/80 pt-1.5 border-t border-purple-500/15">
                   <span className="text-purple-300 font-semibold">{log.ip}</span>
-                  <span className="text-purple-300/50">{new Date(log.loginTime).toLocaleTimeString()}</span>
+                  <span className="text-purple-300/60">{new Date(log.loginTime).toLocaleTimeString()}</span>
                 </div>
               </div>
             ))}
@@ -128,16 +128,16 @@ export default function AdminAuditView({ auditLogs = [], accessLogs = [] }) {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-[#0e0725]/90 border-b border-purple-500/20 text-[11px] font-mono uppercase text-purple-300/60">
-                    <th className="py-3 px-4">Log ID</th>
-                    <th className="py-3 px-4">User Account</th>
-                    <th className="py-3 px-4">Assigned Role</th>
-                    <th className="py-3 px-4">Source IP</th>
-                    <th className="py-3 px-4">Auth Status</th>
-                    <th className="py-3 px-4 text-right">Login Time</th>
+                  <tr className="bg-[#0e0725]/90 border-b border-purple-500/20 text-xs sm:text-sm font-mono uppercase text-purple-300/70 font-semibold">
+                    <th className="py-3.5 px-4">Log ID</th>
+                    <th className="py-3.5 px-4">User Account</th>
+                    <th className="py-3.5 px-4">Assigned Role</th>
+                    <th className="py-3.5 px-4">Source IP</th>
+                    <th className="py-3.5 px-4">Auth Status</th>
+                    <th className="py-3.5 px-4 text-right">Login Time</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-purple-500/15 text-xs font-mono">
+                <tbody className="divide-y divide-purple-500/15 text-sm font-mono">
                   {accessLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-purple-950/30 transition-colors">
                       <td className="py-3.5 px-4 text-purple-400/60">{log.id}</td>

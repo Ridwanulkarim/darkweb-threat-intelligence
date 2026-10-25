@@ -97,20 +97,20 @@ export default function IncidentsView({ incidents = [], onUpdateIncidentStatus, 
                   <StatusBadge status={inc.status} />
                 </div>
 
-                <h4 className="text-sm font-semibold font-mono text-white mb-1.5 line-clamp-2">
+                <h4 className="text-base font-semibold font-mono text-white mb-1.5 line-clamp-2">
                   {inc.title}
                 </h4>
 
-                <div className="flex items-center gap-2 text-xs text-purple-200/70 font-mono mb-2">
-                  <Building className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                <div className="flex items-center gap-2 text-sm text-purple-200/80 font-mono mb-2">
+                  <Building className="w-4 h-4 text-purple-400 shrink-0" />
                   <span className="truncate">{inc.organization}</span>
                 </div>
 
-                <div className="pt-2 border-t border-purple-500/15 flex items-center justify-between text-[11px] font-mono text-purple-300/60">
+                <div className="pt-2.5 border-t border-purple-500/15 flex items-center justify-between text-xs sm:text-sm font-mono text-purple-300/70">
                   <span>{inc.alerts?.length || 0} Alerts</span>
-                  <div className="flex items-center gap-1 text-purple-300">
+                  <div className="flex items-center gap-1 text-purple-300 font-semibold">
                     <span>Inspect</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
+                    <ChevronRight className="w-4 h-4" />
                   </div>
                 </div>
               </div>
@@ -126,7 +126,7 @@ export default function IncidentsView({ incidents = [], onUpdateIncidentStatus, 
           <div className="lg:hidden pb-3 mb-2 border-b border-purple-500/20">
             <button
               onClick={() => setMobileView('list')}
-              className="flex items-center gap-1.5 text-xs font-mono text-purple-300 hover:text-white px-3 py-1.5 rounded-xl bg-purple-950/40 border border-purple-500/25 touch-manipulation"
+              className="flex items-center gap-1.5 text-sm font-mono text-purple-300 hover:text-white px-3.5 py-2 rounded-xl bg-purple-950/40 border border-purple-500/25 touch-manipulation font-semibold"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Incidents List</span>
@@ -137,30 +137,30 @@ export default function IncidentsView({ incidents = [], onUpdateIncidentStatus, 
             <div className="space-y-5">
               {/* Header */}
               <div className="border-b border-purple-500/20 pb-4">
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-xs text-purple-400/60">ID:</span>
-                    <span className="font-mono text-xs text-purple-300 font-bold">{selectedIncident.id}</span>
+                    <span className="font-mono text-sm text-purple-400/60 font-semibold">ID:</span>
+                    <span className="font-mono text-sm text-purple-300 font-bold">{selectedIncident.id}</span>
                     <StatusBadge status={selectedIncident.severity} type="severity" />
                     <StatusBadge status={selectedIncident.status} />
                   </div>
-                  <span className="text-[11px] font-mono text-purple-300/50">
+                  <span className="text-xs sm:text-sm font-mono text-purple-300/60">
                     Logged: {new Date(selectedIncident.createdAt).toLocaleString()}
                   </span>
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold font-mono text-white">
+                <h3 className="text-lg sm:text-xl font-bold font-mono text-white">
                   {selectedIncident.title}
                 </h3>
-                <p className="text-xs text-purple-200/70 mt-1 flex items-center gap-2">
+                <p className="text-sm text-purple-200/80 mt-1.5 flex items-center gap-2">
                   <Building className="w-4 h-4 text-purple-400 shrink-0" />
                   Impacted Org: <span className="text-white font-semibold">{selectedIncident.organization}</span>
                 </p>
               </div>
 
               {/* Status Action Switcher */}
-              <div className="p-3.5 rounded-xl bg-[#0a041c] border border-purple-500/20">
-                <span className="text-xs font-mono text-purple-300 uppercase tracking-wider block mb-2 font-semibold">
+              <div className="p-4 rounded-xl bg-[#0a041c] border border-purple-500/20">
+                <span className="text-xs sm:text-sm font-mono text-purple-300 uppercase tracking-wider block mb-2 font-semibold">
                   Update Mitigation Lifecycle Status:
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -168,7 +168,7 @@ export default function IncidentsView({ incidents = [], onUpdateIncidentStatus, 
                     <button
                       key={st}
                       onClick={() => handleStatusChange(selectedIncident.id, st)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all touch-manipulation ${
+                      className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-mono transition-all touch-manipulation ${
                         selectedIncident.status === st
                           ? 'bg-rose-500 text-white font-bold shadow-[0_0_12px_rgba(244,63,94,0.4)]'
                           : 'bg-[#150a36] hover:bg-[#1e0f4c] text-purple-200 border border-purple-500/20'
@@ -182,20 +182,20 @@ export default function IncidentsView({ incidents = [], onUpdateIncidentStatus, 
 
               {/* Real-time Alerts */}
               <div>
-                <h4 className="text-xs font-mono uppercase text-purple-300 font-bold tracking-wider mb-2 flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400" />
+                <h4 className="text-sm font-mono uppercase text-purple-300 font-bold tracking-wider mb-2.5 flex items-center gap-2">
+                  <AlertTriangle className="w-4.5 h-4.5 text-amber-400" />
                   Telemetry Alerts Triggered ({selectedIncident.alerts?.length || 0})
                 </h4>
-                <div className="space-y-2 max-h-56 overflow-y-auto">
+                <div className="space-y-2.5 max-h-56 overflow-y-auto">
                   {selectedIncident.alerts?.map((al) => (
                     <div
                       key={al.id}
-                      className="p-3 rounded-xl bg-[#0a041c] border border-purple-500/15 flex items-start gap-3 text-xs font-mono"
+                      className="p-3.5 rounded-xl bg-[#0a041c] border border-purple-500/15 flex items-start gap-3 text-sm font-mono"
                     >
                       <StatusBadge status={al.level} type="level" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-slate-200 break-words">{al.message}</p>
-                        <span className="text-[10px] text-purple-400/50 mt-1 block">
+                        <p className="text-slate-200 break-words font-medium">{al.message}</p>
+                        <span className="text-xs text-purple-400/60 mt-1 block">
                           {al.timestamp ? new Date(al.timestamp).toLocaleTimeString() : 'Recently'}
                         </span>
                       </div>
@@ -205,20 +205,20 @@ export default function IncidentsView({ incidents = [], onUpdateIncidentStatus, 
               </div>
 
               {/* Response Team */}
-              <div className="pt-3 border-t border-purple-500/15 flex flex-wrap items-center justify-between text-xs font-mono text-purple-300/70 gap-2">
-                <div className="flex items-center gap-1.5">
+              <div className="pt-3 border-t border-purple-500/15 flex flex-wrap items-center justify-between text-xs sm:text-sm font-mono text-purple-300/80 gap-2">
+                <div className="flex items-center gap-2">
                   <User className="w-4 h-4 text-purple-400" />
                   <span>Lead Responder:</span>
                   <span className="text-white font-semibold">{selectedIncident.assignedAnalyst || 'SOC Lead'}</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-emerald-400">
+                <div className="flex items-center gap-2 text-emerald-400 font-medium">
                   <ShieldCheck className="w-4 h-4" />
                   <span>Playbook Active: IR-RANSOMWARE-04</span>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="text-center py-12 text-purple-300/50 font-mono text-xs">
+            <div className="text-center py-12 text-purple-300/60 font-mono text-sm">
               Select an incident from the list to inspect mitigation details.
             </div>
           )}

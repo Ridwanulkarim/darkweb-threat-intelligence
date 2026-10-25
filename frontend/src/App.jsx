@@ -592,41 +592,41 @@ export default function App() {
             </div>
 
 
-            <form onSubmit={handleAuthSubmit} className="space-y-3">
+            <form onSubmit={handleAuthSubmit} className="space-y-4">
               <div>
-                <label className="block text-slate-400 mb-1">Operator Email</label>
+                <label className="block text-slate-300 text-sm font-medium mb-1.5">Operator Email</label>
                 <input
                   type="email"
                   required
                   placeholder="analyst@domain.com"
                   value={authForm.email}
                   onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-purple-500/30 text-slate-100 focus:outline-none focus:border-purple-400"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-purple-500/30 text-slate-100 text-sm sm:text-base focus:outline-none focus:border-purple-400"
                 />
               </div>
               <div>
-                <label className="block text-slate-400 mb-1">Operator Password</label>
+                <label className="block text-slate-300 text-sm font-medium mb-1.5">Operator Password</label>
                 <input
                   type="password"
                   required
                   placeholder="••••••••"
                   value={authForm.password}
                   onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-purple-500/30 text-slate-100 focus:outline-none focus:border-purple-400"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-purple-500/30 text-slate-100 text-sm sm:text-base focus:outline-none focus:border-purple-400"
                 />
               </div>
 
-              <div className="pt-2 flex justify-end gap-2">
+              <div className="pt-2 flex justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setIsAuthModalOpen(false)}
-                  className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300"
+                  className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold shadow-[0_0_15px_rgba(168,85,247,0.35)]"
+                  className="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.35)]"
                 >
                   Sign In to SOC
                 </button>
@@ -638,7 +638,7 @@ export default function App() {
 
       {/* Mobile Bottom Quick Navigation Dock */}
       <nav 
-        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#09041a]/95 backdrop-blur-2xl border-t border-purple-500/25 px-2 py-1.5 flex items-center justify-around shadow-[0_-8px_30px_rgba(0,0,0,0.6)]"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#09041a]/95 backdrop-blur-2xl border-t border-purple-500/25 px-2 py-2 flex items-center justify-around shadow-[0_-8px_30px_rgba(0,0,0,0.6)]"
         aria-label="Mobile quick dock"
       >
         <button
@@ -649,8 +649,8 @@ export default function App() {
               : 'text-slate-400 hover:text-purple-300'
           }`}
         >
-          <LayoutDashboard className="w-4 h-4 mb-0.5" />
-          <span className="text-[10px] font-mono">Overview</span>
+          <LayoutDashboard className="w-5 h-5 mb-0.5" />
+          <span className="text-xs font-mono font-medium">Overview</span>
         </button>
 
         <button
@@ -661,8 +661,8 @@ export default function App() {
               : 'text-slate-400 hover:text-purple-300'
           }`}
         >
-          <FileWarning className="w-4 h-4 mb-0.5" />
-          <span className="text-[10px] font-mono">Reports</span>
+          <FileWarning className="w-5 h-5 mb-0.5" />
+          <span className="text-xs font-mono font-medium">Reports</span>
           {reports.length > 0 && (
             <span className="absolute top-0.5 right-1 w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
           )}
@@ -676,8 +676,8 @@ export default function App() {
               : 'text-slate-400 hover:text-purple-300'
           }`}
         >
-          <Crosshair className="w-4 h-4 mb-0.5" />
-          <span className="text-[10px] font-mono">IOCs</span>
+          <Crosshair className="w-5 h-5 mb-0.5" />
+          <span className="text-xs font-mono font-medium">IOCs</span>
         </button>
 
         <button
@@ -688,8 +688,8 @@ export default function App() {
               : 'text-slate-400 hover:text-rose-300'
           }`}
         >
-          <AlertOctagon className="w-4 h-4 mb-0.5" />
-          <span className="text-[10px] font-mono">Incidents</span>
+          <AlertOctagon className="w-5 h-5 mb-0.5" />
+          <span className="text-xs font-mono font-medium">Incidents</span>
           {incidents.filter(i => i.severity === 'CRITICAL').length > 0 && (
             <span className="absolute top-0.5 right-1 w-2 h-2 rounded-full bg-rose-500 animate-ping" />
           )}
@@ -699,8 +699,8 @@ export default function App() {
           onClick={() => setMobileMenuOpen(true)}
           className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-purple-300 hover:text-white transition-all touch-manipulation"
         >
-          <Menu className="w-4 h-4 mb-0.5" />
-          <span className="text-[10px] font-mono">Modules</span>
+          <Menu className="w-5 h-5 mb-0.5" />
+          <span className="text-xs font-mono font-medium">Modules</span>
         </button>
       </nav>
 

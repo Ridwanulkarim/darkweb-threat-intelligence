@@ -117,16 +117,16 @@ export default function Sidebar({
             title={(!isMobile && collapsed) ? `${item.label} - ${item.desc}` : undefined}
           >
             <Icon
-              className={`w-4 h-4 shrink-0 transition-transform ${
+              className={`w-4.5 h-4.5 shrink-0 transition-transform ${
                 isActive ? 'text-purple-300 scale-110 drop-shadow-[0_0_8px_rgba(192,132,252,0.8)]' : 'text-slate-400 group-hover:text-purple-300'
               }`}
             />
             {(!collapsed || isMobile) && (
               <div className="flex-1 min-w-0 flex items-center justify-between">
-                <span className="text-xs font-medium truncate">{item.label}</span>
+                <span className="text-sm font-medium truncate">{item.label}</span>
                 {item.badge !== null && item.badge !== undefined && (
                   <span
-                    className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${
+                    className={`text-xs font-mono px-2 py-0.5 rounded border ${
                       item.badgeColor || (isActive ? 'bg-purple-900/60 text-purple-200 border-purple-600/60' : 'bg-[#120a2e] text-purple-300/80 border-purple-500/20')
                     }`}
                   >
@@ -180,12 +180,12 @@ export default function Sidebar({
         {renderNavButtons(true)}
 
         {/* Mobile Drawer Threat Level Footer */}
-        <div className="p-3 m-3 rounded-xl bg-[#120a2e]/80 border border-purple-500/20 text-[11px] font-mono text-purple-200/80">
-          <div className="flex items-center gap-1.5 text-amber-400 font-semibold mb-1">
-            <Flame className="w-3.5 h-3.5 animate-pulse text-amber-400" />
+        <div className="p-3 m-3 rounded-xl bg-[#120a2e]/80 border border-purple-500/20 text-xs font-mono text-purple-200/90">
+          <div className="flex items-center gap-1.5 text-amber-400 font-semibold mb-1 text-sm">
+            <Flame className="w-4 h-4 animate-pulse text-amber-400" />
             <span>THREAT LEVEL: HIGH</span>
           </div>
-          <p className="text-[10px] text-purple-300/50 leading-tight">
+          <p className="text-xs text-purple-300/70 leading-normal">
             Elevated Darknet Market activity observed in the past 24 hours.
           </p>
         </div>
@@ -198,9 +198,9 @@ export default function Sidebar({
         }`}
       >
         {/* Desktop Sidebar Header toggle */}
-        <div className="flex items-center justify-between px-3 py-3 border-b border-purple-500/20">
+        <div className="flex items-center justify-between px-3.5 py-3 border-b border-purple-500/20">
           {!collapsed && (
-            <span className="text-[11px] font-mono uppercase text-purple-300/60 font-semibold tracking-wider">
+            <span className="text-xs font-mono uppercase text-purple-300/70 font-semibold tracking-wider">
               Security Modules
             </span>
           )}
@@ -218,12 +218,12 @@ export default function Sidebar({
 
         {/* Desktop Sidebar Footer */}
         {!collapsed && (
-          <div className="p-3 m-2 rounded-xl bg-[#120a2e]/60 border border-purple-500/20 text-[11px] font-mono text-purple-200/80">
-            <div className="flex items-center gap-1.5 text-amber-400 font-semibold mb-1">
-              <Flame className="w-3.5 h-3.5 animate-pulse text-amber-400" />
+          <div className="p-3 m-2.5 rounded-xl bg-[#120a2e]/60 border border-purple-500/20 text-xs font-mono text-purple-200/90">
+            <div className="flex items-center gap-1.5 text-amber-400 font-semibold mb-1 text-sm">
+              <Flame className="w-4 h-4 animate-pulse text-amber-400" />
               <span>THREAT LEVEL: HIGH</span>
             </div>
-            <p className="text-[10px] text-purple-300/50 leading-tight">
+            <p className="text-xs text-purple-300/70 leading-normal">
               Elevated Darknet Market activity observed in the past 24 hours.
             </p>
           </div>

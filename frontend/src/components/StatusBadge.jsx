@@ -76,7 +76,7 @@ export default function StatusBadge({ status, type = 'status', className = '' })
 
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium border ${styles} ${className}`}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs sm:text-sm font-mono font-semibold border ${styles} ${className}`}
     >
       {normalized}
     </span>
