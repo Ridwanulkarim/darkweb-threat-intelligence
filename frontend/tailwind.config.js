@@ -9,23 +9,23 @@ export default {
     extend: {
       colors: {
         cyber: {
-          bg: '#060214',
-          bgDarker: '#04010d',
-          card: '#0e0725',
-          cardHover: '#150a36',
-          border: 'rgba(168, 85, 247, 0.2)',
-          borderHover: 'rgba(192, 132, 252, 0.45)',
-          primary: '#a855f7',
-          primaryGlow: 'rgba(168, 85, 247, 0.3)',
-          violet: '#8b5cf6',
-          indigo: '#6366f1',
+          bg: '#030305',
+          bgDarker: '#000000',
+          card: '#0a0408',
+          cardHover: '#14070e',
+          border: 'rgba(239, 68, 68, 0.2)',
+          borderHover: 'rgba(248, 113, 113, 0.45)',
+          primary: '#ef4444',
+          primaryGlow: 'rgba(239, 68, 68, 0.35)',
+          violet: '#f43f5e',
+          indigo: '#e11d48',
           accent: '#00f2fe',
           success: '#00f5a0',
           warning: '#fbbf24',
-          danger: '#ff3366',
-          muted: '#64748b',
+          danger: '#dc2626',
+          muted: '#71717a',
           text: '#f8fafc',
-          subtext: '#c4b5fd'
+          subtext: '#fca5a5'
         }
       },
       fontFamily: {
@@ -33,11 +33,11 @@ export default {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       boxShadow: {
-        'cyber-sm': '0 0 15px rgba(168, 85, 247, 0.25)',
-        'cyber-md': '0 0 30px rgba(168, 85, 247, 0.35)',
-        'cyber-purple': '0 8px 32px 0 rgba(112, 0, 255, 0.25)',
-        'cyber-glow': '0 0 40px rgba(147, 51, 234, 0.4)',
-        'cyber-danger': '0 0 25px rgba(255, 51, 102, 0.3)',
+        'cyber-sm': '0 0 15px rgba(239, 68, 68, 0.25)',
+        'cyber-md': '0 0 30px rgba(239, 68, 68, 0.35)',
+        'cyber-purple': '0 8px 32px 0 rgba(220, 38, 38, 0.25)',
+        'cyber-glow': '0 0 40px rgba(220, 38, 38, 0.4)',
+        'cyber-danger': '0 0 25px rgba(239, 68, 68, 0.35)',
         'cyber-success': '0 0 25px rgba(0, 245, 160, 0.3)',
       },
       animation: {

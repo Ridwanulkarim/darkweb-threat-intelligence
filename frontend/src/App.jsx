@@ -5,6 +5,7 @@ import Modal from './components/Modal';
 import Toast from './components/Toast';
 import StatusBadge from './components/StatusBadge';
 import { api } from './api/client';
+import cyberBg from './assets/cyber-bg.jpg';
 
 // Views
 import DashboardOverview from './views/DashboardOverview';
@@ -211,13 +212,27 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#060214] text-slate-100 cyber-canvas-bg relative overflow-x-hidden selection:bg-purple-500/30 selection:text-purple-200">
+    <div className="min-h-screen flex flex-col bg-[#030305] text-slate-100 cyber-canvas-bg relative overflow-x-hidden selection:bg-red-500/30 selection:text-red-200">
+      {/* High-Fidelity Cyber Matrix Background Graphic Layer */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-0 bg-no-repeat transition-opacity duration-700"
+        style={{ 
+          backgroundImage: `url(${cyberBg})`,
+          backgroundSize: 'max(950px, 58vw) auto',
+          backgroundPosition: 'right 0 top 0',
+          opacity: 0.65,
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.88) 65%, rgba(0,0,0,0.2) 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.88) 65%, rgba(0,0,0,0.2) 100%)'
+        }}
+        aria-hidden="true"
+      />
+
       {/* 3D Perspective Grid Background (Cybersecurity Landing UI effect) */}
       <div className="cyber-perspective-grid" aria-hidden="true" />
       
-      {/* Ambient glowing radial spotlights */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[750px] h-[360px] bg-purple-600/20 rounded-full blur-[130px] pointer-events-none -z-0" />
-      <div className="absolute top-1/3 -right-20 w-[450px] h-[450px] bg-indigo-600/10 rounded-full blur-[150px] pointer-events-none -z-0" />
+      {/* Ambient glowing radial spotlights matching crimson telemetry */}
+      <div className="absolute top-0 right-1/4 w-[650px] h-[360px] bg-red-600/15 rounded-full blur-[140px] pointer-events-none z-0" />
+      <div className="absolute top-1/3 -right-20 w-[450px] h-[450px] bg-rose-600/10 rounded-full blur-[160px] pointer-events-none z-0" />
 
       {/* Top Navbar */}
       <Navbar
@@ -255,9 +270,9 @@ export default function App() {
         {/* Dynamic View Area */}
         <main className="flex-1 p-3.5 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full min-w-0 pb-24 md:pb-8">
           {loading ? (
-            <div className="flex flex-col items-center justify-center h-96 space-y-3 font-mono text-purple-300">
-              <div className="w-8 h-8 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
-              <p className="text-xs uppercase tracking-widest animate-pulse">
+            <div className="flex flex-col items-center justify-center h-96 space-y-3 font-mono text-red-300">
+              <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(239,68,68,0.3)]" />
+              <p className="text-xs uppercase tracking-widest animate-pulse text-red-300">
                 Synchronizing Dark Web Feeds...
               </p>
             </div>
@@ -612,7 +627,7 @@ export default function App() {
                   placeholder="••••••••"
                   value={authForm.password}
                   onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-purple-500/30 text-slate-100 text-sm sm:text-base focus:outline-none focus:border-purple-400"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-red-500/30 text-slate-100 text-sm sm:text-base focus:outline-none focus:border-red-400"
                 />
               </div>
 
@@ -626,7 +641,7 @@ export default function App() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.35)]"
+                  className="px-5 py-2 rounded-lg bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-rose-500 text-white font-bold text-sm shadow-[0_0_15px_rgba(239,68,68,0.35)]"
                 >
                   Sign In to SOC
                 </button>
@@ -638,15 +653,15 @@ export default function App() {
 
       {/* Mobile Bottom Quick Navigation Dock */}
       <nav 
-        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#09041a]/95 backdrop-blur-2xl border-t border-purple-500/25 px-2 py-2 flex items-center justify-around shadow-[0_-8px_30px_rgba(0,0,0,0.6)]"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#070204]/95 backdrop-blur-2xl border-t border-red-500/25 px-2 py-2 flex items-center justify-around shadow-[0_-8px_30px_rgba(0,0,0,0.7)]"
         aria-label="Mobile quick dock"
       >
         <button
           onClick={() => setActiveTab('overview')}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all touch-manipulation ${
             activeTab === 'overview'
-              ? 'text-purple-200 bg-purple-600/20 font-bold shadow-[0_0_12px_rgba(168,85,247,0.3)]'
-              : 'text-slate-400 hover:text-purple-300'
+              ? 'text-red-200 bg-red-600/20 font-bold shadow-[0_0_12px_rgba(239,68,68,0.3)]'
+              : 'text-slate-400 hover:text-red-300'
           }`}
         >
           <LayoutDashboard className="w-5 h-5 mb-0.5" />
@@ -657,14 +672,14 @@ export default function App() {
           onClick={() => setActiveTab('reports')}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all touch-manipulation relative ${
             activeTab === 'reports'
-              ? 'text-purple-200 bg-purple-600/20 font-bold shadow-[0_0_12px_rgba(168,85,247,0.3)]'
-              : 'text-slate-400 hover:text-purple-300'
+              ? 'text-red-200 bg-red-600/20 font-bold shadow-[0_0_12px_rgba(239,68,68,0.3)]'
+              : 'text-slate-400 hover:text-red-300'
           }`}
         >
           <FileWarning className="w-5 h-5 mb-0.5" />
           <span className="text-xs font-mono font-medium">Reports</span>
           {reports.length > 0 && (
-            <span className="absolute top-0.5 right-1 w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+            <span className="absolute top-0.5 right-1 w-2 h-2 rounded-full bg-red-500 animate-pulse" />
           )}
         </button>
 
@@ -672,8 +687,8 @@ export default function App() {
           onClick={() => setActiveTab('indicators')}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all touch-manipulation ${
             activeTab === 'indicators'
-              ? 'text-purple-200 bg-purple-600/20 font-bold shadow-[0_0_12px_rgba(168,85,247,0.3)]'
-              : 'text-slate-400 hover:text-purple-300'
+              ? 'text-red-200 bg-red-600/20 font-bold shadow-[0_0_12px_rgba(239,68,68,0.3)]'
+              : 'text-slate-400 hover:text-red-300'
           }`}
         >
           <Crosshair className="w-5 h-5 mb-0.5" />
@@ -697,7 +712,7 @@ export default function App() {
 
         <button
           onClick={() => setMobileMenuOpen(true)}
-          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-purple-300 hover:text-white transition-all touch-manipulation"
+          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-red-300 hover:text-white transition-all touch-manipulation"
         >
           <Menu className="w-5 h-5 mb-0.5" />
           <span className="text-xs font-mono font-medium">Modules</span>

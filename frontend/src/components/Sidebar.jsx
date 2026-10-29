@@ -111,14 +111,14 @@ export default function Sidebar({
             onClick={() => handleSelectTab(item.id)}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all group touch-manipulation ${
               isActive
-                ? 'bg-purple-600/25 text-purple-100 border border-purple-500/50 shadow-[0_0_16px_rgba(168,85,247,0.3)] font-semibold'
-                : 'text-slate-400 hover:text-purple-200 hover:bg-purple-950/30 border border-transparent'
+                ? 'bg-red-600/25 text-red-100 border border-red-500/50 shadow-[0_0_16px_rgba(239,68,68,0.3)] font-semibold'
+                : 'text-slate-400 hover:text-red-200 hover:bg-red-950/30 border border-transparent'
             }`}
             title={(!isMobile && collapsed) ? `${item.label} - ${item.desc}` : undefined}
           >
             <Icon
               className={`w-4.5 h-4.5 shrink-0 transition-transform ${
-                isActive ? 'text-purple-300 scale-110 drop-shadow-[0_0_8px_rgba(192,132,252,0.8)]' : 'text-slate-400 group-hover:text-purple-300'
+                isActive ? 'text-red-400 scale-110 drop-shadow-[0_0_8px_rgba(248,113,113,0.8)]' : 'text-slate-400 group-hover:text-red-300'
               }`}
             />
             {(!collapsed || isMobile) && (
@@ -127,7 +127,7 @@ export default function Sidebar({
                 {item.badge !== null && item.badge !== undefined && (
                   <span
                     className={`text-xs font-mono px-2 py-0.5 rounded border ${
-                      item.badgeColor || (isActive ? 'bg-purple-900/60 text-purple-200 border-purple-600/60' : 'bg-[#120a2e] text-purple-300/80 border-purple-500/20')
+                      item.badgeColor || (isActive ? 'bg-red-900/60 text-red-200 border-red-600/60' : 'bg-[#140508] text-red-300/80 border-red-500/20')
                     }`}
                   >
                     {item.badge}
@@ -154,22 +154,22 @@ export default function Sidebar({
 
       {/* 2. MOBILE DRAWER */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#09041a] border-r border-purple-500/30 shadow-2xl flex flex-col md:hidden transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#070204] border-r border-red-500/30 shadow-2xl flex flex-col md:hidden transform transition-transform duration-300 ease-in-out ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         aria-label="Mobile navigation"
       >
         {/* Mobile Drawer Header */}
-        <div className="flex items-center justify-between px-4 py-3.5 border-b border-purple-500/20 bg-[#0e0725]">
+        <div className="flex items-center justify-between px-4 py-3.5 border-b border-red-500/20 bg-[#0d0306]">
           <div className="flex items-center gap-2">
-            <ShieldAlert className="w-4 h-4 text-purple-400" />
-            <span className="text-xs font-mono uppercase text-purple-200 font-semibold tracking-wider">
+            <ShieldAlert className="w-4 h-4 text-red-400" />
+            <span className="text-xs font-mono uppercase text-red-200 font-semibold tracking-wider">
               Security Navigation
             </span>
           </div>
           <button
             onClick={() => setMobileOpen && setMobileOpen(false)}
-            className="p-1.5 rounded-lg text-purple-300 hover:text-white hover:bg-purple-900/40 transition-colors touch-manipulation"
+            className="p-1.5 rounded-lg text-red-300 hover:text-white hover:bg-red-900/40 transition-colors touch-manipulation"
             aria-label="Close navigation"
           >
             <X className="w-5 h-5" />
@@ -180,12 +180,12 @@ export default function Sidebar({
         {renderNavButtons(true)}
 
         {/* Mobile Drawer Threat Level Footer */}
-        <div className="p-3 m-3 rounded-xl bg-[#120a2e]/80 border border-purple-500/20 text-xs font-mono text-purple-200/90">
+        <div className="p-3 m-3 rounded-xl bg-[#140508]/80 border border-red-500/20 text-xs font-mono text-red-200/90">
           <div className="flex items-center gap-1.5 text-amber-400 font-semibold mb-1 text-sm">
             <Flame className="w-4 h-4 animate-pulse text-amber-400" />
             <span>THREAT LEVEL: HIGH</span>
           </div>
-          <p className="text-xs text-purple-300/70 leading-normal">
+          <p className="text-xs text-red-300/70 leading-normal">
             Elevated Darknet Market activity observed in the past 24 hours.
           </p>
         </div>
@@ -193,20 +193,20 @@ export default function Sidebar({
 
       {/* 3. DESKTOP COLLAPSIBLE SIDEBAR */}
       <aside
-        className={`hidden md:flex relative z-30 flex-col border-r border-purple-500/20 bg-[#09041a]/85 backdrop-blur-xl transition-all duration-300 ease-in-out select-none shrink-0 ${
+        className={`hidden md:flex relative z-30 flex-col border-r border-red-500/20 bg-[#070204]/90 backdrop-blur-xl transition-all duration-300 ease-in-out select-none shrink-0 ${
           collapsed ? 'w-16' : 'w-64'
         }`}
       >
         {/* Desktop Sidebar Header toggle */}
-        <div className="flex items-center justify-between px-3.5 py-3 border-b border-purple-500/20">
+        <div className="flex items-center justify-between px-3.5 py-3 border-b border-red-500/20">
           {!collapsed && (
-            <span className="text-xs font-mono uppercase text-purple-300/70 font-semibold tracking-wider">
+            <span className="text-xs font-mono uppercase text-red-300/70 font-semibold tracking-wider">
               Security Modules
             </span>
           )}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="p-1 rounded-md text-purple-300/70 hover:text-purple-200 hover:bg-purple-900/40 transition-colors mx-auto touch-manipulation"
+            className="p-1 rounded-md text-red-300/70 hover:text-red-200 hover:bg-red-900/40 transition-colors mx-auto touch-manipulation"
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -218,12 +218,12 @@ export default function Sidebar({
 
         {/* Desktop Sidebar Footer */}
         {!collapsed && (
-          <div className="p-3 m-2.5 rounded-xl bg-[#120a2e]/60 border border-purple-500/20 text-xs font-mono text-purple-200/90">
+          <div className="p-3 m-2.5 rounded-xl bg-[#140508]/60 border border-red-500/20 text-xs font-mono text-red-200/90">
             <div className="flex items-center gap-1.5 text-amber-400 font-semibold mb-1 text-sm">
               <Flame className="w-4 h-4 animate-pulse text-amber-400" />
               <span>THREAT LEVEL: HIGH</span>
             </div>
-            <p className="text-xs text-purple-300/70 leading-normal">
+            <p className="text-xs text-red-300/70 leading-normal">
               Elevated Darknet Market activity observed in the past 24 hours.
             </p>
           </div>

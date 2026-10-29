@@ -21,7 +21,7 @@
   }
 
   body {
-    background-color: #060214;
+    background-color: #030305;
     color: #f1f5f9;
     overflow-x: hidden;
     font-size: 1rem;
@@ -36,39 +36,40 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #060214;
+  background: #030305;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e113a;
+  background: #240d13;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a855f7;
+  background: #ef4444;
 }
 
 /* 
- * Cyber Perspective Background & Ambient Violet Aurora
- * Recreates the exact high-tech cybersecurity landing page atmosphere
+ * Cyber Threat Matrix Background & Ambient Crimson Glitch Grid
+ * Recreates the exact high-tech red cybersecurity threat intelligence landing aesthetic
  */
 .cyber-canvas-bg {
-  background-color: #060214;
+  background-color: #030305;
   background-image:
-    /* Top ambient violet/indigo light source */
-    radial-gradient(ellipse 90% 50% at 50% -8%, rgba(147, 51, 234, 0.38) 0%, rgba(99, 102, 241, 0.18) 35%, rgba(6, 2, 20, 0) 75%),
-    /* Secondary bottom right soft glow */
-    radial-gradient(circle at 90% 90%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
-    /* Isometric / perspective wireframe lines */
-    linear-gradient(135deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px),
-    linear-gradient(225deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px),
-    /* Horizontal tactical scanning grid lines */
-    linear-gradient(to bottom, rgba(139, 92, 246, 0.07) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px, 100% 32px;
+    /* High-contrast gradient overlay ensuring all left/center content is ultra readable */
+    linear-gradient(to right, rgba(3, 3, 5, 0.94) 0%, rgba(3, 3, 5, 0.85) 45%, rgba(3, 3, 5, 0.4) 75%, rgba(3, 3, 5, 0.2) 100%),
+    /* Ambient crimson cyber glow from top right */
+    radial-gradient(ellipse 70% 45% at 85% 0%, rgba(220, 38, 38, 0.22) 0%, rgba(185, 28, 28, 0.08) 50%, transparent 80%),
+    /* Tactical scan lines */
+    linear-gradient(to bottom, rgba(239, 68, 68, 0.035) 1px, transparent 1px),
+    /* The user's red cyber matrix background image */
+    url('/cyber-bg.jpg');
+  background-size: 100% 100%, 100% 100%, 100% 32px, cover;
+  background-position: center, center, center, right top;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat;
   background-attachment: fixed;
 }
 
-/* 3D Perspective Grid Accent (recreates the exact angled wireframe floor in the user's screenshot) */
+/* 3D Perspective Grid Accent (matching the red threat intelligence telemetry) */
 .cyber-perspective-grid {
   position: absolute;
   top: 0;
@@ -76,8 +77,8 @@
   right: -25%;
   height: 620px;
   background-image: 
-    linear-gradient(to right, rgba(168, 85, 247, 0.14) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(168, 85, 247, 0.14) 1px, transparent 1px);
+    linear-gradient(to right, rgba(239, 68, 68, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(239, 68, 68, 0.12) 1px, transparent 1px);
   background-size: 44px 44px;
   transform: perspective(340px) rotateX(56deg);
   transform-origin: top center;
@@ -89,24 +90,24 @@
 
 /* Ultra-Clean Translucent Glassmorphism Cards */
 .cyber-card {
-  background: rgba(14, 8, 32, 0.68);
+  background: rgba(10, 5, 8, 0.72);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(168, 85, 247, 0.22);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.20);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cyber-card:hover {
-  border-color: rgba(192, 132, 252, 0.45);
-  box-shadow: 0 12px 40px -4px rgba(139, 92, 246, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+  border-color: rgba(248, 113, 113, 0.45);
+  box-shadow: 0 12px 40px -4px rgba(220, 38, 38, 0.28), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
   transform: translateY(-1px);
 }
 
 .cyber-card-active {
-  background: rgba(22, 12, 51, 0.85);
-  border-color: #a855f7;
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+  background: rgba(24, 7, 12, 0.9);
+  border-color: #ef4444;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
 }
 
 /* Glow effects */
@@ -119,7 +120,7 @@
 }
 
 .glow-red {
-  text-shadow: 0 0 12px rgba(255, 51, 102, 0.6);
+  text-shadow: 0 0 14px rgba(239, 68, 68, 0.8);
 }
 
 .glow-green {
@@ -129,6 +130,12 @@
 /* Glowing text gradients */
 .text-gradient-purple {
   background: linear-gradient(135deg, #ffffff 0%, #e9d5ff 45%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-red {
+  background: linear-gradient(135deg, #ffffff 0%, #fecaca 45%, #f87171 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
