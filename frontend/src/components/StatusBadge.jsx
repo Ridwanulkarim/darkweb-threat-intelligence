@@ -30,7 +30,7 @@ export default function StatusBadge({ status, type = 'status', className = '' })
         styles = 'bg-blue-950/70 text-blue-300 border-blue-800/60';
         break;
       case 'DOMAIN':
-        styles = 'bg-purple-950/70 text-purple-300 border-purple-800/60';
+        styles = 'bg-rose-950/70 text-rose-300 border-rose-800/60';
         break;
       case 'HASH':
         styles = 'bg-emerald-950/70 text-emerald-300 border-emerald-800/60';

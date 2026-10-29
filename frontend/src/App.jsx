@@ -562,7 +562,7 @@ export default function App() {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold shadow-[0_0_15px_rgba(168,85,247,0.35)] transition-all"
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-bold shadow-[0_0_15px_rgba(239,68,68,0.35)] transition-all"
               >
                 Ingest to Database
               </button>
@@ -581,13 +581,13 @@ export default function App() {
         >
           <div className="space-y-4 font-mono text-xs">
             {/* Type selector */}
-            <div className="flex rounded-lg bg-slate-900 p-1 border border-purple-500/30">
+            <div className="flex rounded-lg bg-slate-900 p-1 border border-red-500/30">
               <button
                 type="button"
                 onClick={() => setAuthForm({ ...authForm, type: 'analyst' })}
                 className={`flex-1 py-1.5 rounded-md font-bold transition-all ${
                   authForm.type === 'analyst' 
-                    ? 'bg-purple-600 text-white shadow-[0_0_15px_rgba(168,85,247,0.35)]' 
+                    ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.35)]' 
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -598,7 +598,7 @@ export default function App() {
                 onClick={() => setAuthForm({ ...authForm, type: 'admin' })}
                 className={`flex-1 py-1.5 rounded-md font-bold transition-all ${
                   authForm.type === 'admin' 
-                    ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.35)]' 
+                    ? 'bg-rose-700 text-white shadow-[0_0_15px_rgba(190,18,60,0.35)]' 
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -616,7 +616,7 @@ export default function App() {
                   placeholder="analyst@domain.com"
                   value={authForm.email}
                   onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-purple-500/30 text-slate-100 text-sm sm:text-base focus:outline-none focus:border-purple-400"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-red-500/30 text-slate-100 text-sm sm:text-base focus:outline-none focus:border-red-400"
                 />
               </div>
               <div>
